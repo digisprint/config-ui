@@ -1,4 +1,4 @@
-package com.liverpool.configuration.api.resource;
+package com.liverpool.configuration.api.controller;
 
 import java.util.List;
 import java.util.Optional;
