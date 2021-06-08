@@ -1,2 +1,2 @@
-# pub-sub
-Sample Application to integrate Spring with PUB-SUB
+# config-ui
+Application to Implement CRUD UI for Entity using Spring, Mongo, Angular
