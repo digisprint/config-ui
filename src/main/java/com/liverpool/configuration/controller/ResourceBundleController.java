@@ -1,44 +1,50 @@
-package com.liverpool.configuration.api.controller;
+package com.liverpool.configuration.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.liverpool.configuration.api.modal.Configuration;
-import com.liverpool.configuration.api.repository.LPConfigurationRepository;
+import com.liverpool.configuration.beans.ResourceBundle;
+import com.liverpool.configuration.service.ResourceBundleService;
 
 @RestController
-public class LPConfigurationController {
+public class ResourceBundleController {
 	
-	@Autowired
-	private LPConfigurationRepository repository;
+	private ResourceBundleService resourceService;
 	
-	@PostMapping("/createConfiguration")
-	public String createConfiguration(@RequestBody Configuration config) {
-		repository.save(config);
-		return "Values configured successfully " +config.getKey();
+	public ResourceBundleController(ResourceBundleService resourceService){
+		this.resourceService = resourceService;
 	}
 	
-	@GetMapping("/listAllConfigurations")
-	public List<Configuration> getConfigurations(){
-		return repository.findAll();
+	@PostMapping("/resourceBundle")
+	public String createResourceBundle(@RequestBody ResourceBundle config) {
+		return resourceService.createResourceBundle(config);
 	}
 	
-	@GetMapping("/getConfigurationByKey")
-	public Optional<Configuration> getConfigurationByKey(@RequestParam String key){
-		return repository.findById(key);
+	@PutMapping("/resourceBundle")
+	public String updatedResourceBundle(@RequestBody ResourceBundle config) {
+		return resourceService.updateResourceBundle(config);
 	}
 	
-	@GetMapping("/deleteConfigurationByKey")
-	public String deleteConfiguration(@RequestParam String key){
-		repository.deleteById(key);
-		return "Configuration has been deleted";
+	@GetMapping("/resourceBundle")
+	public List<ResourceBundle> getResourceBundles(){
+		return resourceService.getResourceBundles();
+	}
+	
+	@GetMapping("/resourceBundle/{key}")
+	public ResourceBundle getResourceBundleByKey(@PathVariable String key){
+		return resourceService.getResourceBundleByKey(key);
+	}
+	
+	@DeleteMapping("/resourceBundle/{key}")
+	public String deleteResourceBundleByKey(@PathVariable String key){
+		return resourceService.deleteResourceBundle(key);
 	}
 	
 }
