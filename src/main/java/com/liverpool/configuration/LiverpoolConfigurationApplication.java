@@ -1,4 +1,4 @@
-package com.liverpool.configuration.api;
+package com.liverpool.configuration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
