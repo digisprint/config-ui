@@ -1,5 +1,7 @@
 package com.liverpool.configuration.beans;
 
+import java.util.Map;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +18,6 @@ public class ResourceBundle {
 	@Id
 	private String key;
 	private String value;
-	
+	private Map<String, String> siteValues;
 
 }
