@@ -1,6 +1,6 @@
 package com.liverpool.configuration.constants;
 
-public interface ResourceBundleConstants {
+public interface ConfigurationConstants {
 	
 	String ID ="_id";
 	String VALUE = "value";
