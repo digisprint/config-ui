@@ -46,5 +46,6 @@ public class ResourceBundleController {
 	public String deleteResourceBundleByKey(@PathVariable String key){
 		return resourceService.deleteResourceBundle(key);
 	}
+
 	
 }
