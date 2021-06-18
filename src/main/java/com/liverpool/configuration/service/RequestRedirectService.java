@@ -15,4 +15,6 @@ public interface RequestRedirectService {
 
 	public void deleteConfiguration(String type, String key);
 	
+	public ResponseData getConfigurationTypes();
+	
 }

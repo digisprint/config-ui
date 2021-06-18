@@ -95,4 +95,16 @@ public class ConfigurationController extends BaseController {
 		return success(key, HttpStatus.OK, "Deleted configuration for key "+key);
 	}
 	
+	@Operation(summary = "This service used to get the available configuration types")
+	@ApiResponses(value = {
+	@ApiResponse(responseCode = "400", description = "Invalid data",
+	content = @Content),
+	@ApiResponse(responseCode = "404", description = "Data not found",
+	content = @Content) })	
+	@GetMapping("/config")
+	public ResponseEntity<ResponseData> getConfigurationTypes(){
+		ResponseData resp = redirectService.getConfigurationTypes();
+		return success(resp.getBody(), HttpStatus.OK, "Getting the available configuration types");
+	}
+	
 }

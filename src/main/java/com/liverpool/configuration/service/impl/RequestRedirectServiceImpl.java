@@ -1,5 +1,6 @@
 package com.liverpool.configuration.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -103,5 +104,16 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		} else if ((configMapTypeName).equalsIgnoreCase(type)) {
 			configMapService.deleteConfigMap(key);
 		}
+	}
+
+	@Override
+	public ResponseData getConfigurationTypes() {
+		List<String> configTypes = new ArrayList<String>();
+		ResponseData resp = new ResponseData();
+		configTypes.add(staticKeysTypeName);
+		configTypes.add(configListTypeName);
+		configTypes.add(configMapTypeName);
+		resp.setBody(configTypes);
+		return resp;
 	}
 }
