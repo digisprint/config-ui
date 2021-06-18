@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,8 @@ public class ConfigMapServiceImpl implements ConfigMapService{
 	}
 	
 	@Override
+	@Caching(evict = { @CacheEvict(value = "configMapCache", allEntries = true), }, 
+	 put = { @CachePut(value = "configMapCache", key = "#config.key") })
 	public void createConfigMap(@NonNull ConfigMap config) {
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue());
