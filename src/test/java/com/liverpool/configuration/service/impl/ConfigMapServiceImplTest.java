@@ -20,7 +20,7 @@ import com.liverpool.configuration.repository.ConfigMapRepository;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.InsertOneResult;
 
-@WebMvcTest(ConfigListServiceImpl.class)
+@WebMvcTest(ConfigMapServiceImpl.class)
 public class ConfigMapServiceImplTest {
 
 	@MockBean
