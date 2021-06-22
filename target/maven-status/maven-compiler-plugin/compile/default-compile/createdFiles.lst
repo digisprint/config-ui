@@ -1,0 +1,10 @@
+com\liverpool\configuration\api\bean\User.class
+com\liverpool\configuration\api\bean\Users.class
+com\liverpool\configuration\api\controller\UserController.class
+com\liverpool\configuration\api\controller\LPConfigurationController.class
+com\liverpool\configuration\api\LiverpoolConfigurationApplication.class
+com\liverpool\configuration\api\service\impl\UserServiceIpml.class
+com\liverpool\configuration\api\repository\UserRepository.class
+com\liverpool\configuration\api\modal\Configuration.class
+com\liverpool\configuration\api\service\UserService.class
+com\liverpool\configuration\api\repository\LPConfigurationRepository.class
