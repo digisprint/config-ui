@@ -1,0 +1,18 @@
+name: trigger jenkins on close of PR
+on: 
+  pull_request:
+    type: closed
+    branches:
+      - feature*
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: trigger build
+      uses: actions/cache@v1
+      with:
+        url: "http://35.223.181.63:8080/"
+        user: "Phani Shankar Munukuta"
+        JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+        job: "githubWorkflow"
