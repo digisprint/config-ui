@@ -16,3 +16,4 @@ jobs:
         user: "Phani Shankar Munukuta"
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         job: "githubWorkflow"
+        run: mvn clean package com.google.cloud.tools:jib-maven-plugin:2.5.0:build -Dimage=registry.hub.docker.com/asyovan/global_configurations
