@@ -5,9 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,10 +15,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.liverpool.configuration.beans.StaticKeys;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.repository.StaticKeysRepository;
-import com.liverpool.configuration.service.impl.StaticKeysServiceImpl;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.InsertOneResult;
 

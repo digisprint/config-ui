@@ -19,13 +19,9 @@ import com.liverpool.configuration.service.ConfigListService;
 import com.liverpool.configuration.service.ConfigMapService;
 import com.liverpool.configuration.service.RequestRedirectService;
 import com.liverpool.configuration.service.StaticKeysService;
-import com.liverpool.configuration.service.impl.RequestRedirectServiceImpl;
-
-import lombok.extern.slf4j.Slf4j;
 
 @WebMvcTest(RequestRedirectServiceImpl.class)
 @ActiveProfiles("junit")
-@Slf4j
 public class RequestRedirectServiceImplTest {
 	
 	@MockBean
