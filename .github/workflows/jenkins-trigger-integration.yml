@@ -13,6 +13,7 @@ jobs:
     - name: trigger build
       uses: actions/cache@v1
       with:
+        path: ~/.m2
         url: "http://35.223.181.63:8080/"
         user: "Phani Shankar Munukuta"
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
