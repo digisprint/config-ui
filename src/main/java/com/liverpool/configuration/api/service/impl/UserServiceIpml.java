@@ -56,17 +56,20 @@ public class UserServiceIpml implements UserService {
 	public UserResponse login(String userName, String password) {
 
 			
-			User user = new User();
-			user.setUserName("Ramesh");
-			user.setId("234567890");
-			//userRepo.findByUserName(userName);
+			User user = userRepo.findByUserName(userName);
+			if(user == null) {
+				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name oes not exist");
+			}
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			String encodedPassword = passwordEncoder.encode(password);
-			boolean isPasswordMatch = passwordEncoder.matches(password, encodedPassword);
+			boolean isPasswordMatch = passwordEncoder.matches(password, user.getPassword());
+			if(isPasswordMatch) {
 			UserResponse userresponse = new UserResponse();
 				userresponse.setStatus(Boolean.TRUE);
 				userresponse.setToken(generateToken(user));
 			return userresponse;
+			}else {
+				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name or password is wrong");
+			}
 		
 	}
 	
