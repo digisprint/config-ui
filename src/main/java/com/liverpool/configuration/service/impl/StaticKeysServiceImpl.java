@@ -39,6 +39,7 @@ public class StaticKeysServiceImpl implements StaticKeysService{
 	@Caching(evict = { @CacheEvict(value = "staticKeysCache", allEntries = true), }, 
 	 put = { @CachePut(value = "staticKeysCache", key = "#config.key") })
 	public void createStaticKey(@NonNull StaticKeys config) {
+		System.out.println(config);
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue())
 				.append(ConfigurationConstants.SITE_VALUES, config.getSiteValues());
