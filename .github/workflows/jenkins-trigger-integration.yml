@@ -1,7 +1,7 @@
 name: trigger jenkins on close of PR
 on: 
   pull_request:
-    type: closed
+    types: [opened, synchronize, reopened]
     branches:
       - feature*
 jobs:
