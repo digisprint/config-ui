@@ -16,6 +16,7 @@ import com.liverpool.configuration.api.bean.UserResponse;
 import com.liverpool.configuration.api.bean.Users;
 import com.liverpool.configuration.api.repository.UserRepository;
 import com.liverpool.configuration.api.service.UserService;
+import com.liverpool.configuration.properties.ConfigrationsProeprties;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -29,7 +30,9 @@ public class UserServiceIpml implements UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-
+	
+	@Autowired
+	private ConfigrationsProeprties properties;
 	@Override
 	public Users getUsers() {
 		List<User> userList = userRepo.findAll();
@@ -103,7 +106,7 @@ public class UserServiceIpml implements UserService {
 		.setIssuedAt(currentTimeNow.getTime())
 		.setExpiration(expireTime)
 		.signWith(SignatureAlgorithm.HS512,
-			    "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=");
+				properties.getSecretKey().getBytes());
 		
 		return token.compact();
 	}
