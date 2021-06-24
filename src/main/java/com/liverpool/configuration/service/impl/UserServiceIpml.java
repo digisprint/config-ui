@@ -1,4 +1,4 @@
-package com.liverpool.configuration.api.service.impl;
+package com.liverpool.configuration.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,12 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.liverpool.configuration.api.bean.User;
-import com.liverpool.configuration.api.bean.UserResponse;
-import com.liverpool.configuration.api.bean.Users;
-import com.liverpool.configuration.api.repository.UserRepository;
-import com.liverpool.configuration.api.service.UserService;
+import com.liverpool.configuration.beans.User;
+import com.liverpool.configuration.beans.UserResponse;
+import com.liverpool.configuration.beans.Users;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
+import com.liverpool.configuration.repository.UserRepository;
+import com.liverpool.configuration.service.UserService;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

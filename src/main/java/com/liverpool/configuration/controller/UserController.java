@@ -1,4 +1,4 @@
-package com.liverpool.configuration.api.controller;
+package com.liverpool.configuration.controller;
 
 import javax.validation.Valid;
 
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.liverpool.configuration.api.bean.LoginPayload;
-import com.liverpool.configuration.api.bean.User;
-import com.liverpool.configuration.api.bean.UserResponse;
-import com.liverpool.configuration.api.bean.Users;
-import com.liverpool.configuration.api.service.UserService;
+import com.liverpool.configuration.beans.LoginPayload;
+import com.liverpool.configuration.beans.User;
+import com.liverpool.configuration.beans.UserResponse;
+import com.liverpool.configuration.beans.Users;
+import com.liverpool.configuration.service.UserService;
 
 @RestController
 public class UserController {

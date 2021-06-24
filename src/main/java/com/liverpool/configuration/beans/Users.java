@@ -1,4 +1,4 @@
-package com.liverpool.configuration.api.bean;
+package com.liverpool.configuration.beans;
 
 import java.util.List;
 

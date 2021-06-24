@@ -1,8 +1,8 @@
-package com.liverpool.configuration.api.repository;
+package com.liverpool.configuration.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.liverpool.configuration.api.bean.User;
+import com.liverpool.configuration.beans.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
