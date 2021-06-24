@@ -19,8 +19,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@Slf4j
 public class ConfigurationController extends BaseController {
 	
 	private RequestRedirectService redirectService;
@@ -64,6 +66,7 @@ public class ConfigurationController extends BaseController {
 	content = @Content) })	
 	@GetMapping("/config/{type}")
 	public ResponseEntity<ResponseData> getAllConfigurations(@PathVariable String type){
+		log.info("retrieving configuration for "+type);
 		ResponseData resp = redirectService.getAllConfigurations(type);
 		return success(resp.getBody(), HttpStatus.OK, "Displaying all configurations of "+type);
 	}
