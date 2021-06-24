@@ -1,0 +1,16 @@
+.CardItem{
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px dotted grey;
+}
+
+.CardItem:hover{
+    background-color: grey;
+    color: white;
+}
+
+.cardImage{
+    width: 100px;
+    height: 70px;
+}
