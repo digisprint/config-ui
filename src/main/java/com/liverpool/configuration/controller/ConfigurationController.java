@@ -31,6 +31,12 @@ public class ConfigurationController extends BaseController {
 		this.redirectService = redirectService;
 	}
 	
+	@GetMapping("/config/hello")
+	public String ping() {
+		
+		return "Hello, your test successful";
+	}
+	
 	@Operation(summary = "This service used to create configuration")
 	@ApiResponses(value = {
 	@ApiResponse(responseCode = "400", description = "Invalid data",
