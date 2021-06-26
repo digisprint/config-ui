@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,8 +22,6 @@ import com.liverpool.configuration.service.UserService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @Service
@@ -102,13 +101,14 @@ public class UserServiceIpml implements UserService {
 		.setSubject("ConfigLogin")
 		.claim("userName", user.getUserName())
 		.claim("userId", user.getId())
-		.claim("role", "admin")
+		.claim("roles", user.getRoles())
 		.setIssuedAt(currentTimeNow.getTime())
 		.setExpiration(expireTime)
 		.signWith(SignatureAlgorithm.HS512,
 				properties.getSecretKey().getBytes());
 		
 		return token.compact();
+		
 	}
 		
 }
