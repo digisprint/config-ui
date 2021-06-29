@@ -12,5 +12,6 @@ public class Configuration {
 	private StaticKeys staticKeys;
 	private ConfigList configList;
 	private ConfigMap configMap;
+	private MultiValuedConfigMap multiValuedConfigMap;
 
 }

@@ -17,6 +17,7 @@ import com.liverpool.configuration.beans.StaticKeys;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.service.ConfigListService;
 import com.liverpool.configuration.service.ConfigMapService;
+import com.liverpool.configuration.service.MultiValuedConfigMapService;
 import com.liverpool.configuration.service.RequestRedirectService;
 import com.liverpool.configuration.service.StaticKeysService;
 import com.liverpool.configuration.service.impl.RequestRedirectServiceImpl;
@@ -38,16 +39,20 @@ public class RequestRedirectServiceImplTest {
 	private ConfigMapService configMapService;
 	
 	@MockBean
+	private MultiValuedConfigMapService multiValuedConfigMapService;
+	
+	@MockBean
 	private ConfigrationsProeprties properies;
 	
 	private RequestRedirectService service;
 	
 	@BeforeEach
 	public void setUp() {
-		service = new RequestRedirectServiceImpl(properies,staticKeyService, configListService, configMapService);
+		service = new RequestRedirectServiceImpl(properies,staticKeyService, configListService, configMapService, multiValuedConfigMapService);
 		when(properies.getStaticKeysTypeName()).thenReturn("staticKeys");
 		when(properies.getConfigListTypeName()).thenReturn("configList");
 		when(properies.getConfigMapTypeName()).thenReturn("configMap");
+		when(properies.getConfigMapTypeName()).thenReturn("multiValuedConfigMap");
 	}
 	
 	@Test
