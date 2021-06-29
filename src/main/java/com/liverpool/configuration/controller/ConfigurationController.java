@@ -1,5 +1,7 @@
 package com.liverpool.configuration.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +46,7 @@ public class ConfigurationController extends BaseController {
 	@ApiResponse(responseCode = "404", description = "Data not found",
 	content = @Content) })	
 	@PostMapping("/config/{type}")
-	public ResponseEntity<ResponseData> createConfiguration(@PathVariable String type, @RequestBody Configuration config) {
+	public ResponseEntity<ResponseData> createConfiguration(@PathVariable String type, @Valid @RequestBody Configuration config) {
 		redirectService.redirectCreateRequest(type, config);
 		return success(config, HttpStatus.OK, "Configuration created of type "+type);
 	}
@@ -56,7 +58,7 @@ public class ConfigurationController extends BaseController {
 	@ApiResponse(responseCode = "404", description = "Data not found",
 	content = @Content) })	
 	@PutMapping("/config/{type}")
-	public ResponseEntity<ResponseData> updateConfiguration(@PathVariable String type, @RequestBody Configuration config) {
+	public ResponseEntity<ResponseData> updateConfiguration(@PathVariable String type, @Valid @RequestBody Configuration config) {
 		redirectService.redirectUpdateRequest(type, config);
 		return success(config, HttpStatus.OK, "Configuration updated!!");
 	}
@@ -115,5 +117,5 @@ public class ConfigurationController extends BaseController {
 		ResponseData resp = redirectService.getConfigurationTypes();
 		return success(resp.getBody(), HttpStatus.OK, "Getting the available configuration types");
 	}
-	
+
 }
