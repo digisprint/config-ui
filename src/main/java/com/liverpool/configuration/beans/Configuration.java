@@ -1,7 +1,6 @@
 package com.liverpool.configuration.beans;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
