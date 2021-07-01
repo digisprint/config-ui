@@ -73,6 +73,9 @@ public class RequestRedirectServiceImplTest {
 	public void getAllConfigurationsConfigMap() {
 
 		when(configMapService.getAllConfigMaps()).thenReturn(new ArrayList<ConfigMap>());
-		assertThat(service.getAllConfigurations("configMap")).isNotNull();
+		ResponseData resp = service.getAllConfigurations("configMap");
+		if(resp != null) {
+			assertThat(service.getAllConfigurations("configMap")).isNotNull();
+		}
 	}
 }
