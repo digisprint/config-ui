@@ -15,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
+import com.liverpool.configuration.service.UserService;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.DefaultJwtSignatureValidator;
@@ -24,7 +25,15 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 	
 	@Autowired
 	private ConfigrationsProeprties properties;
-
+     
+	@Autowired
+	private UserService userService;
+	
+	@Override
+	protected void initFilterBean() throws ServletException{
+		userService.insertInitialData();
+	}
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		
@@ -35,7 +44,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 			DefaultJwtSignatureValidator validator = new DefaultJwtSignatureValidator(sa, secretKeySpec); 
 			String[] chunks = token.split("\\.");
 			if(chunks.length<2) {
-				Exception e = new Exception("Trying with no permission");
+				Exception e = new Exception("seems you doesnt have proper permissions");
 				ObjectMapper mapper = new ObjectMapper();
 				response.setStatus(HttpStatus.UNAUTHORIZED.value());
 				response.getWriter().write(mapper.writeValueAsString(e));
@@ -51,7 +60,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 					response.getWriter().write(mapper.writeValueAsString(e));
 				}
 			}
-		}else if(request.getRequestURI().equals("/login")) {
+		}else if(request.getRequestURI().equals("/login")|| request.getRequestURI().equals("/register")) {
 			doFilter(request, response, filterChain);
 		}else {
 			Exception e = new Exception("Not allowed to use the Service");
