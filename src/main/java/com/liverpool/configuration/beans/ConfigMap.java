@@ -23,7 +23,7 @@ public class ConfigMap implements Serializable{
 	private String key;
 	
 	@NotEmpty(message = "Value should not be empty")
-	private Map<String, @NotBlank String> value;
+	private Map<String, String> value;
 
 
 }
