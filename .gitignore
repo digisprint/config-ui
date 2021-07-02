@@ -1,3 +1,12 @@
+# dependencies
+/config-react/node_modules
+
+# testing
+/config-react/coverage
+
+# production
+/config-react/build
+
 # Compiled class file
 *.class
 
