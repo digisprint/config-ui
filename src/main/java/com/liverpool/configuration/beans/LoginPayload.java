@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginPayload {
+	
 	@NotNull
 	private String userName;
 	@NotNull

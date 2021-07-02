@@ -114,7 +114,6 @@ public class UserServiceIpml implements UserService {
 
 		return token.compact();
 	}
-
 	public void insertInitialData() {
 		Optional<User> user = userRepo.findById("admin");
 		if (!user.isPresent()) {

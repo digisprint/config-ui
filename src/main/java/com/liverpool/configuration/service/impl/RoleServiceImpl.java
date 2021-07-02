@@ -51,5 +51,4 @@ public class RoleServiceImpl implements RoleService {
 	public String getAllRoles(String id) {
 		roleRepository.findAll();
 		return "found all roles";
-	}
-}
+	}}

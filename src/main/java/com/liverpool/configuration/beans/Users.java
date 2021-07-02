@@ -8,5 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Users {
+	
 	private List<User> users;
 }

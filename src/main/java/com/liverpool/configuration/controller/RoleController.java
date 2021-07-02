@@ -15,7 +15,6 @@ import com.liverpool.configuration.service.RoleService;
 
 @RestController
 public class RoleController {
-
 	@Autowired
 	private RoleService roleService;
 
@@ -29,7 +28,7 @@ public class RoleController {
 		System.out.println(role.getRoleName());
 		return roleService.addRole(role);
 	}
-
+	
 	@DeleteMapping(value = "/role/{id}")
 	public void deleteRoles(@PathVariable("id") String id) {
 		roleService.deleteRole(id);

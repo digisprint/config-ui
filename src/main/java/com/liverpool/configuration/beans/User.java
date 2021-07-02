@@ -16,6 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
+
 	@Id
 	private String id;
 	@NotNull
@@ -29,5 +30,5 @@ public class User {
 	@NotNull
 	private String email;
 	@DBRef
-    private List<Role> roles;	
+	private List<Role> roles;
 }
