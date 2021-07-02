@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@DisplayName(name="Map Configurations")
+@Component
 public class ConfigMap implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")

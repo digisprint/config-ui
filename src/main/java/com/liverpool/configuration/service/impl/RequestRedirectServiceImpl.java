@@ -1,13 +1,21 @@
 package com.liverpool.configuration.service.impl;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.liverpool.configuration.beans.ConfigList;
 import com.liverpool.configuration.beans.ConfigMap;
 import com.liverpool.configuration.beans.Configuration;
+import com.liverpool.configuration.beans.ConfigurationTypes;
+import com.liverpool.configuration.beans.DisplayName;
 import com.liverpool.configuration.beans.MultiValuedConfigMap;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.beans.StaticKeys;
@@ -30,6 +38,9 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	private ConfigrationsProeprties properties;
 	
 	private MultiValuedConfigMapService multiValuedConfigService;
+	
+	@Autowired
+	private ApplicationContext context;
 	
 	public RequestRedirectServiceImpl(ConfigrationsProeprties properties, StaticKeysService staticKeyService, 
 			ConfigListService configListService,ConfigMapService configMapService, MultiValuedConfigMapService multiValuedConfigService){
@@ -120,12 +131,24 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 
 	@Override
 	public ResponseData getConfigurationTypes() {
-		List<String> configTypes = new ArrayList<String>();
+		
+		List<ConfigurationTypes> configTypes = new ArrayList<ConfigurationTypes>();
 		ResponseData resp = new ResponseData();
-		configTypes.add(properties.getStaticKeysTypeName());
-		configTypes.add(this.properties.getConfigListTypeName());
-		configTypes.add(this.properties.getConfigMapTypeName());
-		configTypes.add(this.properties.getMultiValuedConfigMapTypeName());
+		Map<String, Object> beans = context.getBeansWithAnnotation(DisplayName.class);
+		beans.forEach((key, value) -> {
+			ConfigurationTypes configType = new ConfigurationTypes();
+			Map<String, String> configMap = new HashMap<String, String>();
+			Field[] fields = value.getClass().getDeclaredFields();
+			Arrays.stream(fields).forEach(field -> {
+				configMap.put(field.getName(),field.getType().getCanonicalName());
+			});
+			configType.setBeanName(value.getClass().getCanonicalName());
+			configType.setDisplayName(value.getClass().getAnnotation(DisplayName.class).name());
+			configType.setDisplayProperty("key");
+			configType.setProperties(configMap);
+			configTypes.add(configType);
+		});
+		
 		resp.setBody(configTypes);
 		return resp;
 	}
