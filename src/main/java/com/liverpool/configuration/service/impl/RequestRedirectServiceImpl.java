@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 import com.liverpool.configuration.beans.ConfigList;
 import com.liverpool.configuration.beans.ConfigMap;
 import com.liverpool.configuration.beans.Configuration;
+import com.liverpool.configuration.beans.MultiValuedConfigMap;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.beans.StaticKeys;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.service.ConfigListService;
 import com.liverpool.configuration.service.ConfigMapService;
+import com.liverpool.configuration.service.MultiValuedConfigMapService;
 import com.liverpool.configuration.service.RequestRedirectService;
 import com.liverpool.configuration.service.StaticKeysService;
 
@@ -27,10 +29,14 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	
 	private ConfigrationsProeprties properties;
 	
-	public RequestRedirectServiceImpl(ConfigrationsProeprties properties, StaticKeysService staticKeyService, ConfigListService configListService,ConfigMapService configMapService){
+	private MultiValuedConfigMapService multiValuedConfigService;
+	
+	public RequestRedirectServiceImpl(ConfigrationsProeprties properties, StaticKeysService staticKeyService, 
+			ConfigListService configListService,ConfigMapService configMapService, MultiValuedConfigMapService multiValuedConfigService){
 		this.staticKeyService = staticKeyService;
 		this.configListService = configListService;
 		this.configMapService = configMapService;
+		this.multiValuedConfigService = multiValuedConfigService;
 		this.properties = properties;
 	}
 	
@@ -42,6 +48,8 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 			configListService.createConfigList(config.getConfigList());
 		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
 			configMapService.createConfigMap(config.getConfigMap());
+		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
+			multiValuedConfigService.createMultiValuedConfigMap(config.getMultiValuedConfigMap());
 		}
 	}
 
@@ -53,6 +61,8 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 			configListService.updateConfigList(config.getConfigList());
 		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
 			configMapService.updateConfigMap(config.getConfigMap());
+		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
+			multiValuedConfigService.updateMultiValuedConfigMap(config.getMultiValuedConfigMap());
 		}
 	}
 
@@ -68,6 +78,9 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
 			List<ConfigMap> allConfigMaps = configMapService.getAllConfigMaps();
 			resp.setBody(allConfigMaps);
+		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
+			List<MultiValuedConfigMap> allMultiValuedConfigMaps = multiValuedConfigService.getAllMultiValuedConfigMaps();
+			resp.setBody(allMultiValuedConfigMaps);
 		}
 		return resp;
 	}
@@ -84,6 +97,9 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
 			ConfigMap configMap = configMapService.getConfigMapByKey(key);
 			resp.setBody(configMap);
+		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
+			MultiValuedConfigMap multiValuedConfigMap = multiValuedConfigService.getMultiValuedConfigMapByKey(key);
+			resp.setBody(multiValuedConfigMap);
 		}
 		return resp;
 	}
@@ -97,6 +113,8 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 			configListService.deleteConfigList(key);
 		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
 			configMapService.deleteConfigMap(key);
+		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
+			multiValuedConfigService.deleteMultiValuedConfigMap(key);
 		}
 	}
 
@@ -107,6 +125,7 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		configTypes.add(properties.getStaticKeysTypeName());
 		configTypes.add(this.properties.getConfigListTypeName());
 		configTypes.add(this.properties.getConfigMapTypeName());
+		configTypes.add(this.properties.getMultiValuedConfigMapTypeName());
 		resp.setBody(configTypes);
 		return resp;
 	}
