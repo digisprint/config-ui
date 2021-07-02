@@ -61,8 +61,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 					response.getWriter().write(mapper.writeValueAsString(e));
 				}
 			}
-		}
-		else if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/register")) {
+		}else if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/register")) {
 			doFilter(request, response, filterChain);
 		} else {
 			Exception e = new Exception("Not allowed to use the Service");

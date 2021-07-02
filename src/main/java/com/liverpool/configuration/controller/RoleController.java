@@ -15,6 +15,7 @@ import com.liverpool.configuration.service.RoleService;
 
 @RestController
 public class RoleController {
+	
 	@Autowired
 	private RoleService roleService;
 

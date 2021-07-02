@@ -7,5 +7,4 @@ import com.liverpool.configuration.beans.Role;
 
 @Repository
 public interface RoleRepository extends MongoRepository<Role, String> {
-	
 }

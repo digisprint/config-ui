@@ -16,6 +16,7 @@ import com.liverpool.configuration.service.UserService;
 
 @RestController
 public class UserController {
+	
 	@Autowired
 	private UserService userService;
 

@@ -9,7 +9,6 @@ import lombok.Setter;
 @Document(collection = "roles")
 @Getter
 @Setter
-
 public class Role {
 	@Id
 	private String id;
