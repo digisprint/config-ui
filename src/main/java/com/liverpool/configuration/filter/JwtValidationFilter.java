@@ -22,56 +22,52 @@ import io.jsonwebtoken.impl.crypto.DefaultJwtSignatureValidator;
 
 @Component
 public class JwtValidationFilter extends OncePerRequestFilter {
-	
+
 	@Autowired
 	private ConfigrationsProeprties properties;
-     
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Override
-	protected void initFilterBean() throws ServletException{
+	protected void initFilterBean() throws ServletException {
 		userService.insertInitialData();
 	}
-	
+
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-		
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+
 		String token = request.getHeader("token");
-		if(token != null) {
+		if (token != null) {
 			SignatureAlgorithm sa = SignatureAlgorithm.HS512;
 			SecretKeySpec secretKeySpec = new SecretKeySpec(properties.getSecretKey().getBytes(), sa.getJcaName());
-			DefaultJwtSignatureValidator validator = new DefaultJwtSignatureValidator(sa, secretKeySpec); 
+			DefaultJwtSignatureValidator validator = new DefaultJwtSignatureValidator(sa, secretKeySpec);
 			String[] chunks = token.split("\\.");
-			if(chunks.length<2) {
+			if (chunks.length < 2) {
 				Exception e = new Exception("seems you doesnt have proper permissions");
 				ObjectMapper mapper = new ObjectMapper();
 				response.setStatus(HttpStatus.UNAUTHORIZED.value());
 				response.getWriter().write(mapper.writeValueAsString(e));
-			}else {
+			} else {
 				String tokenWithoutSignature = chunks[0] + "." + chunks[1];
 				String signature = chunks[2];
-				if(validator.isValid(tokenWithoutSignature, signature) && !request.getRequestURI().equals("/login")) {
+				if (validator.isValid(tokenWithoutSignature, signature) && !request.getRequestURI().equals("/login")) {
 					doFilter(request, response, filterChain);
-				}else {
+				} else {
 					Exception e = new Exception("User is already loggedIn");
 					ObjectMapper mapper = new ObjectMapper();
 					response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
 					response.getWriter().write(mapper.writeValueAsString(e));
 				}
 			}
-		}else if(request.getRequestURI().equals("/login")|| request.getRequestURI().equals("/register")) {
+		} else if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/register")) {
 			doFilter(request, response, filterChain);
-		}else {
+		} else {
 			Exception e = new Exception("Not allowed to use the Service");
 			ObjectMapper mapper = new ObjectMapper();
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			response.getWriter().write(mapper.writeValueAsString(e));
 		}
-		
-		
 	}
-	
-	
-
 }

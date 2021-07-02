@@ -29,115 +29,96 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
 @Service
 public class UserServiceIpml implements UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private MongoTemplate template;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	private ConfigrationsProeprties properties;
+
 	@Override
 	public Users getUsers() {
 		List<User> userList = userRepo.findAll();
 		Users u = new Users();
 		u.setUsers(userList);
-
 		return u;
-
 	}
 
 	@Override
 	public String addUser(User user) {
-        AtomicBoolean allRolesAvailable = new AtomicBoolean(true);
-        user.getRoles().stream().forEach(role->{
-        	if(!roleRepository.findById(role.getId()).isPresent()) {
-        		allRolesAvailable.set(false);
-        	}
-        	
-        });
-        if(allRolesAvailable.get()) {
-		String encryptedPassword = encryptPassword(user.getPassword());
-		user.setPassword(encryptedPassword);
-		
+		AtomicBoolean allRolesAvailable = new AtomicBoolean(true);
+		user.getRoles().stream().forEach(role -> {
+			if (!roleRepository.findById(role.getId()).isPresent()) {
+				allRolesAvailable.set(false);
+			}
+		});
+		if (allRolesAvailable.get()) {
+			String encryptedPassword = encryptPassword(user.getPassword());
+			user.setPassword(encryptedPassword);
+
 			userRepo.insert(user);
 			return "sucessfully registered " + user.getUserName();
-        }
-        else {
-        	throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"some of the roles are not found");
-        }
-		
+		} else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "some of the roles are not found");
+		}
 	}
- 
-	
 
 	@Override
 	public UserResponse login(String userName, String password) {
 
-			User user = userRepo.findByUserName(userName);
-			if(user == null) {
-				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name oes not exist");
-			}
-			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			boolean isPasswordMatch = passwordEncoder.matches(password, user.getPassword());
-			if(isPasswordMatch) {
+		User user = userRepo.findByUserName(userName);
+		if (user == null) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name oes not exist");
+		}
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		boolean isPasswordMatch = passwordEncoder.matches(password, user.getPassword());
+		if (isPasswordMatch) {
 			UserResponse userresponse = new UserResponse();
-				userresponse.setStatus(Boolean.TRUE);
-				userresponse.setToken(generateToken(user));
+			userresponse.setStatus(Boolean.TRUE);
+			userresponse.setToken(generateToken(user));
 			return userresponse;
-			}else {
-				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name or password is wrong");
-			}
-		
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name or password is wrong");
+		}
 	}
-	
+
 	private boolean isValidPassword(String password) {
-		String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" ;//+ "(?=.*[@#$%^&+=])" + "(?=\\S+$).{8,20}$";
+		String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])";// + "(?=.*[@#$%^&+=])" + "(?=\\S+$).{8,20}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(password);
-
 		return matcher.matches();
-
 	}
-	private String encryptPassword(String password)
-	{
+
+	private String encryptPassword(String password) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode(password);
-		
 		return encodedPassword;
-		
 	}
-	
+
 	private String generateToken(User user) {
 		Calendar currentTimeNow = Calendar.getInstance();
 		currentTimeNow.add(Calendar.MINUTE, 30);
 		Date expireTime = currentTimeNow.getTime();
-		JwtBuilder token = Jwts.builder()
-		.setIssuer("CongfigServer")
-		.setSubject("ConfigLogin")
-		.claim("userName", user.getUserName())
-		.claim("userId", user.getId())
-		.claim("roles", user.getRoles())
-		.setIssuedAt(currentTimeNow.getTime())
-		.setExpiration(expireTime)
-		.signWith(SignatureAlgorithm.HS512,
-				properties.getSecretKey().getBytes());
-		
+		JwtBuilder token = Jwts.builder().setIssuer("CongfigServer").setSubject("ConfigLogin")
+				.claim("userName", user.getUserName()).claim("userId", user.getId()).claim("roles", user.getRoles())
+				.setIssuedAt(currentTimeNow.getTime()).setExpiration(expireTime)
+				.signWith(SignatureAlgorithm.HS512, properties.getSecretKey().getBytes());
+
 		return token.compact();
-		
 	}
-		
+
 	public void insertInitialData() {
 		Optional<User> user = userRepo.findById("admin");
-		if(!user.isPresent()) {
-			User u=new User();
+		if (!user.isPresent()) {
+			User u = new User();
 			u.setUserName("admin");
 			u.setPassword("admin");
 			u.setFirstName("rahul");
@@ -145,7 +126,7 @@ public class UserServiceIpml implements UserService {
 			u.setEmail("rahul@gmail.com");
 			u.setId("admin");
 			List<Role> roles = new ArrayList<>();
-			Role role =	new Role();	
+			Role role = new Role();
 			role.setId("admin");
 			role.setRoleName("Super admin");
 			u.setRoles(roles);
@@ -154,6 +135,5 @@ public class UserServiceIpml implements UserService {
 			u.setRoles(roles);
 			addUser(u);
 		}
-		
 	}
 }

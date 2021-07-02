@@ -16,27 +16,22 @@ import com.liverpool.configuration.service.UserService;
 
 @RestController
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
 
-	@GetMapping(value="/user")
+	@GetMapping(value = "/user")
 	public Users getUsers() {
-		
 		return userService.getUsers();
 	}
-	
-	@PostMapping(value="/register")
+
+	@PostMapping(value = "/register")
 	public String register(@RequestBody @Valid User user) {
 		return userService.addUser(user);
 	}
-	
-	@PostMapping(value="/login")
+
+	@PostMapping(value = "/login")
 	public UserResponse login(@RequestBody @Valid LoginPayload loginPayload) {
 		return userService.login(loginPayload.getUserName(), loginPayload.getPassword());
-		
-		
 	}
-	
-	
 }

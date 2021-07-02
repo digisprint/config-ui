@@ -13,37 +13,35 @@ import com.liverpool.configuration.beans.Role;
 import com.liverpool.configuration.beans.Roles;
 import com.liverpool.configuration.service.RoleService;
 
-
 @RestController
 public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
-	
-	@GetMapping(value="/role")
+
+	@GetMapping(value = "/role")
 	public Roles getRoles() {
 		return roleService.getRoles();
 	}
-	
-	@PostMapping(value="/role")
+
+	@PostMapping(value = "/role")
 	public String addRoles(@RequestBody Role role) {
 		System.out.println(role.getRoleName());
 		return roleService.addRole(role);
 	}
-	@DeleteMapping(value="/role/{id}")
+
+	@DeleteMapping(value = "/role/{id}")
 	public void deleteRoles(@PathVariable("id") String id) {
-		 roleService.deleteRole(id);
+		roleService.deleteRole(id);
 	}
-	
-	@PutMapping(value="/role")
+
+	@PutMapping(value = "/role")
 	public String updateRole(@RequestBody Role role) {
 		return roleService.updateRole(role);
 	}
-	
-	@GetMapping(value="/role/{id}")
+
+	@GetMapping(value = "/role/{id}")
 	public Role getRoleById(@PathVariable("id") String id) {
 		return roleService.getRoleById(id);
 	}
-
-	
 }

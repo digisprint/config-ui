@@ -9,7 +9,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Roles {
-	
 	private List<Role> roles;
-	
 }
