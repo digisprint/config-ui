@@ -26,94 +26,71 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 public class ConfigurationController extends BaseController {
-	
+
 	private RequestRedirectService redirectService;
-	
-	public ConfigurationController(RequestRedirectService redirectService){
+
+	public ConfigurationController(RequestRedirectService redirectService) {
 		this.redirectService = redirectService;
 	}
-	
-	@GetMapping("/config/hello")
-	public String ping() {
-		
-		return "Hello, your test successful";
-	}
-	
+
 	@Operation(summary = "This service used to create configuration")
-	@ApiResponses(value = {
-	@ApiResponse(responseCode = "400", description = "Invalid data",
-	content = @Content),
-	@ApiResponse(responseCode = "404", description = "Data not found",
-	content = @Content) })	
+	@ApiResponses(value = { @ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@PostMapping("/config/{type}")
-	public ResponseEntity<ResponseData> createConfiguration(@PathVariable String type, @Valid @RequestBody Configuration config) {
+	public ResponseEntity<ResponseData> createConfiguration(@PathVariable String type,
+			@RequestBody Configuration config) {
 		redirectService.redirectCreateRequest(type, config);
-		return success(config, HttpStatus.OK, "Configuration created of type "+type);
+		return success(config, HttpStatus.OK, "Configuration created of type " + type);
 	}
-	
+
 	@Operation(summary = "This service used to update configuration")
-	@ApiResponses(value = {
-	@ApiResponse(responseCode = "400", description = "Invalid data",
-	content = @Content),
-	@ApiResponse(responseCode = "404", description = "Data not found",
-	content = @Content) })	
+	@ApiResponses(value = { @ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@PutMapping("/config/{type}")
-	public ResponseEntity<ResponseData> updateConfiguration(@PathVariable String type, @Valid @RequestBody Configuration config) {
+	public ResponseEntity<ResponseData> updateConfiguration(@PathVariable String type,
+			@RequestBody Configuration config) {
 		redirectService.redirectUpdateRequest(type, config);
 		return success(config, HttpStatus.OK, "Configuration updated!!");
 	}
-	
+
 	@Operation(summary = "This service used to get all configurations")
-	@ApiResponses(value = {
-	@ApiResponse(responseCode = "200", description = "Configurations Response",
-	content = { @Content(mediaType = "application/json",
-	schema = @Schema(implementation = ResponseEntity.class)) }),
-	@ApiResponse(responseCode = "400", description = "Invalid data",
-	content = @Content),
-	@ApiResponse(responseCode = "404", description = "Data not found",
-	content = @Content) })	
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Configurations Response", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class)) }),
+			@ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@GetMapping("/config/{type}")
-	public ResponseEntity<ResponseData> getAllConfigurations(@PathVariable String type){
-		log.info("retrieving configuration for "+type);
+	public ResponseEntity<ResponseData> getAllConfigurations(@PathVariable String type) {
+
+		log.info("retrieving configuration for " + type);
 		ResponseData resp = redirectService.getAllConfigurations(type);
-		return success(resp.getBody(), HttpStatus.OK, "Displaying all configurations of "+type);
+		return success(resp.getBody(), HttpStatus.OK, "Displaying all configurations of " + type);
 	}
-	
+
 	@Operation(summary = "This service used to get configuration by key")
-	@ApiResponses(value = {
-	@ApiResponse(responseCode = "200", description = "Configuration Response",
-	content = { @Content(mediaType = "application/json",
-	schema = @Schema(implementation = ResponseEntity.class)) }),
-	@ApiResponse(responseCode = "400", description = "Invalid data",
-	content = @Content),
-	@ApiResponse(responseCode = "404", description = "Data not found",
-	content = @Content) })	
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Configuration Response", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class)) }),
+			@ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@GetMapping("/config/{type}/{key}")
-	public ResponseEntity<ResponseData> getConfigurationByKey(@PathVariable String type, @PathVariable String key){
+	public ResponseEntity<ResponseData> getConfigurationByKey(@PathVariable String type, @PathVariable String key) {
 		ResponseData resp = redirectService.getConfigurationByKey(type, key);
-		return success(resp.getBody(), HttpStatus.OK, "Displaying configuration for key "+key);
+		return success(resp.getBody(), HttpStatus.OK, "Displaying configuration for key " + key);
 	}
-	
+
 	@Operation(summary = "This service used to delete configuration")
-	@ApiResponses(value = {
-	@ApiResponse(responseCode = "400", description = "Invalid data",
-	content = @Content),
-	@ApiResponse(responseCode = "404", description = "Data not found",
-	content = @Content) })	
+	@ApiResponses(value = { @ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@DeleteMapping("/config/{type}/{key}")
-	public ResponseEntity<ResponseData> deleteConfigurationByKey(@PathVariable String type, @PathVariable String key){
+	public ResponseEntity<ResponseData> deleteConfigurationByKey(@PathVariable String type, @PathVariable String key) {
 		redirectService.deleteConfiguration(type, key);
-		return success(key, HttpStatus.OK, "Deleted configuration for key "+key);
+		return success(key, HttpStatus.OK, "Deleted configuration for key " + key);
 	}
-	
+
 	@Operation(summary = "This service used to get the available configuration types")
-	@ApiResponses(value = {
-	@ApiResponse(responseCode = "400", description = "Invalid data",
-	content = @Content),
-	@ApiResponse(responseCode = "404", description = "Data not found",
-	content = @Content) })	
+	@ApiResponses(value = { @ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@GetMapping("/config")
-	public ResponseEntity<ResponseData> getConfigurationTypes(){
+	public ResponseEntity<ResponseData> getConfigurationTypes() {
 		ResponseData resp = redirectService.getConfigurationTypes();
 		return success(resp.getBody(), HttpStatus.OK, "Getting the available configuration types");
 	}
