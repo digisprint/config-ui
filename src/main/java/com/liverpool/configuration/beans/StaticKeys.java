@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@DisplayName(name="Static Keys")
+@Component
 public class StaticKeys implements Serializable{
 	
 	@Id
