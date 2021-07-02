@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.liverpool.configuration.beans.Configuration;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.service.RequestRedirectService;
-import com.liverpool.configuration.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
