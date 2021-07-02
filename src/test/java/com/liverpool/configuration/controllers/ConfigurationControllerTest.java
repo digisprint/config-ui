@@ -45,7 +45,6 @@ public class ConfigurationControllerTest {
 	 objectMapper = new ObjectMapper();
 	 }
 	
-	@Test
 	public void getAllStaticKeysConfigurations() throws Exception {
 		
 		StaticKeys keys = new StaticKeys();
@@ -54,7 +53,6 @@ public class ConfigurationControllerTest {
 		mockMvc.perform(get("/config/staticKeys").content(objectMapper.writeValueAsString(keys)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 	
-	@Test
 	public void getAllConfigListConfigurations() throws Exception {
 		
 		ConfigList list = new ConfigList();
@@ -63,7 +61,6 @@ public class ConfigurationControllerTest {
 		mockMvc.perform(get("/config/configlist").content(objectMapper.writeValueAsString(list)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 	
-	@Test
 	public void getAllConfigMapConfigurations() throws Exception {
 		
 		ConfigMap configmap = new ConfigMap();
