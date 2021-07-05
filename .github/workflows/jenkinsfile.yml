@@ -13,7 +13,7 @@ jobs:
     - name: "Trigger jenkins job"
       uses: GoldenspearLLC/build-jenkins-job@master
       with:
-        jenkins-url: "http://digisprint-lp.com:5457/"
+        jenkins-url: "digisprint-lp.com:5457"
         jenkins-token: ${{ secrets.JENKINS_TOKEN }}
         user: "admin"
         job-path: "job/config-pipeline"
