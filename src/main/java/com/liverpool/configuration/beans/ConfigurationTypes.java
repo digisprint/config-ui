@@ -11,5 +11,6 @@ public class ConfigurationTypes {
 	private String beanName;
 	private String displayName;
 	private String displayProperty;
+	private String urlPath;
 	private Map<String, String> properties;
 }

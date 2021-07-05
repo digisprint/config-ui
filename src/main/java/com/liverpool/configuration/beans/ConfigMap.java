@@ -18,14 +18,16 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@DisplayName(name="Map Configurations")
+@BeanConfiguration(name="Map Configurations",url_path="configMap")
 @Component
 public class ConfigMap implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")
+	@DisplayProperty(display = true,uiPropType = "String")
 	private String key;
 	
 	@NotEmpty(message = "Value should not be empty")
+	@DisplayProperty(uiPropType = "Map")
 	private Map<String, String> value;
 
 

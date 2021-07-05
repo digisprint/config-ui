@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-public @interface DisplayName {
+public @interface BeanConfiguration {
 	String name() default "bean";
+	String url_path();
 }

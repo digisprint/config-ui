@@ -19,14 +19,17 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@DisplayName(name="Multi Valued Configuration")
+@BeanConfiguration(name="Multi Valued Configuration",url_path="multiValuedConfigMap")
 @Component
 public class MultiValuedConfigMap implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")
+	@DisplayProperty(display = true,uiPropType = "String")
 	private String key;
+	@DisplayProperty(uiPropType = "String")
 	private String type;
 	@NotEmpty(message = "Value should not be empty")
+	@DisplayProperty(uiPropType = "Map")
 	private Map<@NotBlank String, List<@NotBlank String>> value;
 
 

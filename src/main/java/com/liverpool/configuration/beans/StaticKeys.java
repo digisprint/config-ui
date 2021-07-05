@@ -17,15 +17,18 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@DisplayName(name="Static Keys")
+@BeanConfiguration(name="Static Keys",url_path="staticKeys")
 @Component
 public class StaticKeys implements Serializable{
 	
 	@Id
 	@NotBlank(message = "Key should not be empty")
+	@DisplayProperty(display = true,uiPropType = "String")
 	private String key;
 	@NotBlank(message = "Value should not be empty")
+	@DisplayProperty(uiPropType = "String")
 	private String value;
+	@DisplayProperty(uiPropType = "Map")
 	private Map<String, String> siteValues;
 
 }

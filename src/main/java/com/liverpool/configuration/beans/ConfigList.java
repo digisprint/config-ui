@@ -18,13 +18,15 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@DisplayName(name="List Configurations")
+@BeanConfiguration(name="List Configurations",url_path="configList")
 @Component
 public class ConfigList implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")
+	@DisplayProperty(display = true,uiPropType = "String")
 	private String key;
 	
 	@NotEmpty(message = "Value should not be empty")
+	@DisplayProperty(uiPropType = "List")
 	private List<String> value;
 }
