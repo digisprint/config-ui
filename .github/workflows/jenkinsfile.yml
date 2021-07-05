@@ -2,6 +2,7 @@ name: trigger jenkins on close of PR
 on: 
   pull_request:
     types: [closed]
+  push:
     branches:
       - feature*
 jobs:
@@ -9,10 +10,12 @@ jobs:
     name: CI Pipeline-Build
     runs-on: ubuntu-latest
     steps:
-    - name: trigger jenkins Job
-      uses: appleboy/jenkins-action@master
+    - name: "Trigger jenkins job"
+      uses: GoldenspearLLC/build-jenkins-job@master
       with:
-        url: "http://digisprint-lp.com:5457"
+        jenkins-url: "http://digisprint-lp.com:5457/"
+        jenkins-token: ${{ secrets.JENKINS_TOKEN }}
         user: "admin"
-        token: ${{ secrets.JENKINS_TOKEN }}
-        job: "config-pipeline"
+        job-path: "job/config-pipeline"
+    - name: Get job status
+      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
