@@ -5,38 +5,10 @@ import './Tabs.css'
 
 const Tabs = () => {
     return (
-        <div className="container-fluid">
-              <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="sidebar-sticky" style={{'position': 'absolute', 'top': '72px'}}>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <span data-feather="home"></span>
-                Static Keys <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-                List Configrations
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-               Map Confingrations
-            </a>
-          </li>
-         
-        </ul>
-
+        <div style={{'borderTop': '2px solid #eee'}} className="container p-3">
+    <main role="main" class="col-md-9 col-lg-10 px-4">
+      <div class="justify-content-between flex-wrap flex-md-nowrap pt-3">
         
-      </div>
-    </nav>
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div class="justify-content-between flex-wrap flex-md-nowrap pt-3" style={{'position': 'absolute', 'top': '72px'}}>
-        <h1 class="h2">Dashboard</h1>
          {/* Vertical Tab Start */}
              {/* <SearchBar /> */}
              <div class="container d-flex align-items-start">
@@ -61,7 +33,7 @@ const Tabs = () => {
               {/* Vertical Tab Ends */}
       </div>
     </main>
-    </div>
+    
             
         </div>
     )
