@@ -6,16 +6,13 @@ on:
       - feature*
 jobs:
   build:
-    name: Build
+    name: CI Pipeline-Build
     runs-on: ubuntu-latest
     steps:
-    - name: trigger build
-      uses: actions/cache@v1
+    - name: trigger jenkins Job
+      uses: appleboy/jenkins-action@master
       with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
         url: "http://digisprint-lp.com:5457"
         user: "admin"
-        JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+        token: ${{ secrets.JENKINS_TOKEN }}
         job: "config-pipeline"
