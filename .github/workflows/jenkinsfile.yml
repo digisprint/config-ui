@@ -16,6 +16,6 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
         url: "http://digisprint-lp.com:5457"
-        user: "Phani Shankar Munukuta"
+        user: "admin"
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         job: "config-pipeline"
