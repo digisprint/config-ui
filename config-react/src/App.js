@@ -1,18 +1,20 @@
 import './App.css';
 import React from 'react';
-import {Home} from './templates/UI/Home'
-import Tabs from './components/Tabs/Tabs';
 import Nav from './components/Nav/Nav';
+import NavBar from './NavBar';
+import { TypeaHead } from './container/TypeaHead/TypeaHead';
 // import ProjectList from './components/ProjectList/ProjectList';
+import Footer from './components/Footer/Footer';
 
 
 function App() {
   return (
     <React.Fragment>
-      {/* <Home /> */}
       <Nav />
-     <Tabs />
+      <TypeaHead />
+      <NavBar/>
      {/* <ProjectList /> */}
+     <Footer />
     </React.Fragment>
   );
 }

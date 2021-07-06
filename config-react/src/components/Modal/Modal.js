@@ -30,11 +30,6 @@ export const Modals=(props)=> {
         style={{display:'flex',alignItems:'center',justifyContent:'center'}}
       >
           <div className={classes.paper}><div>{props.children}</div>
-          <hr/>
-          <div style={{display:'flex',justifyContent:'space-between'}}>
-          <button onClick={props.handleClose} className="btn">Close</button>
-          <button onClick={props.handleClose} className="btn">Ok</button>
-          </div>
           </div>
       </Modal>
     </div>

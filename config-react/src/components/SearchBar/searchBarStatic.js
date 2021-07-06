@@ -2,7 +2,7 @@ import React,{useState, useMemo} from 'react'
 import { BsSearch } from "react-icons/bs";
 import DataList from '../../templates/UI/DataList';
 
-function SearchBar(props){
+function SearchBarStatic(props){
   const [input, setInput] = useState('')
 
    //search functionality
@@ -52,4 +52,4 @@ function SearchBar(props){
     </React.Fragment>)
 }
 
-export default SearchBar
+export default SearchBarStatic

@@ -1,0 +1,15 @@
+.pr-nav {
+    background-color: #fff;
+    color: #fff;
+}
+.pr-nav a img {
+    width: 100%;
+}
+.pr-nav ul a {
+    color: #24bdb8;
+    font-weight: 700;
+    font-size: 14px;
+}
+.pr-nav ul a:hover {
+    color: #2C61AD;
+}

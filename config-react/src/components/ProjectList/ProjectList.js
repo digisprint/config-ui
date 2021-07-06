@@ -6,7 +6,7 @@ function ProjectList() {
           
         {
             id: 1,
-            name: 'Liverpool Team',
+            name: 'Liverpool',
         },
         {
             id: 2,

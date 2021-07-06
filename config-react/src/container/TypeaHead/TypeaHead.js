@@ -30,7 +30,7 @@ export const TypeaHead=()=>{
 
 
     return (<div style={{width:'600px',margin:'50px',position:'relative'}}>
-        <SearchBar fieldChanging={(e)=>{fieldChanging(e)}} fieldState={fieldState}/>
+        {/* <SearchBar fieldChanging={(e)=>{fieldChanging(e)}} fieldState={fieldState}/> */}
         {fieldState.length?<Card styling={{position:'absolute',top:'44px',right:'0' ,zIndex:'10',width:'100%'}} setFieldStateByCardItem={(e,item)=>{setFieldStateByCardItem(e,item)}} items={cardItems}/>:null}
         </div>)
 }
