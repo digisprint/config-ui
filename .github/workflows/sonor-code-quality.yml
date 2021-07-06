@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Runing scan
-    runs-on: ubuntu-18.04
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
         with:
