@@ -14,10 +14,7 @@ jobs:
       uses: enflo/jenkins-action@master
       with:
         url: "http://digisprint-lp.com:5457"
-        user: "admin"
-        token: "116e764949afb7fffa05addc207836109d"
+        user: ${{ secrets.JENKINS_USER }}
+        token: ${{ secrets.JENKINS_TOKEN }}
         job: "job/config-pipeline"
-        parameters: token=SONAR_JENKINS
-        
-        
-        
+        parameters: token=${{ secrets.JENKINS_BUILD_TOKEN }}&branch_name=${{ github.event.pull_request.base.ref }}
