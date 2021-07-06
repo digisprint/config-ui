@@ -19,4 +19,4 @@ jobs:
         job: "job/config-pipeline"
         parameters: token=${{ secrets.JENKINS_BUILD_TOKEN }}&branch_name=${{ github.event.pull_request.base.ref }}
     - name: "Get job status"
-      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
+      run: echo "triggered jenmins job successfully"
