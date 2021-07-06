@@ -11,11 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: "Trigger jenkins job"
-      uses: GoldenspearLLC/build-jenkins-job@master
+      uses: enflo/jenkins-action@master
       with:
-        jenkins-url: "digisprint-lp.com:5457"
-        jenkins-token: ${{ secrets.JENKINS_TOKEN }}
+        url: "http://digisprint-lp.com:5457"
         user: "admin"
-        job-path: "job/config-pipeline"
-    - name: Get job status
-      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
+        token: "116e764949afb7fffa05addc207836109d"
+        job: "job/config-pipeline"
+        parameters: token=SONAR_JENKINS
+        
+        
+        
