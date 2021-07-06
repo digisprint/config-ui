@@ -30,7 +30,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
 		response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-		response.addHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+		response.addHeader("Access-Control-Allow-Headers", "*");
 		String token = request.getHeader("token");
 		if (token != null) {
 			SignatureAlgorithm sa = SignatureAlgorithm.HS512;
@@ -54,7 +54,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 					response.getWriter().write(mapper.writeValueAsString(e));
 				}
 			}
-		}else if (request.getRequestURI().contains("/login") || request.getRequestURI().contains("/register")) {
+		}else if (!request.getRequestURI().contains("/config/")) {
 			doFilter(request, response, filterChain);
 		} else {
 			Exception e = new Exception("Not allowed to use the Service");
