@@ -18,3 +18,5 @@ jobs:
         token: ${{ secrets.JENKINS_TOKEN }}
         job: "job/config-pipeline"
         parameters: token=${{ secrets.JENKINS_BUILD_TOKEN }}&branch_name=${{ github.event.pull_request.base.ref }}
+    - name: "Get job status"
+      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
