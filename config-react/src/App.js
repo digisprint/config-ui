@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import Nav from './components/Nav/Nav';
-import NavBar from './NavBar';
+import Container from './Container';
 import { TypeaHead } from './container/TypeaHead/TypeaHead';
 // import ProjectList from './components/ProjectList/ProjectList';
 import Footer from './components/Footer/Footer';
@@ -12,7 +12,7 @@ function App() {
     <React.Fragment>
       <Nav />
       <TypeaHead />
-      <NavBar/>
+      <Container/>
      {/* <ProjectList /> */}
      <Footer />
     </React.Fragment>
