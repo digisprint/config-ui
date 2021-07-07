@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.liverpool.configuration.properties.ConfigrationsProeprties;
+import com.liverpool.configuration.service.UserService;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.DefaultJwtSignatureValidator;
@@ -20,7 +22,20 @@ import io.jsonwebtoken.impl.crypto.DefaultJwtSignatureValidator;
 @Component
 public class JwtValidationFilter extends OncePerRequestFilter {
 
+	private UserService userService;
+	
+	private ConfigrationsProeprties configProps;
 
+	public JwtValidationFilter(UserService userService, ConfigrationsProeprties configProps) {
+		this.userService = userService;
+		this.configProps = configProps;
+	}
+
+	@Override
+	protected void initFilterBean() throws ServletException {
+		userService.insertInitialData();
+	}
+	
 	private static final String SECRET_KEY = "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=";
 
 	@Override
@@ -34,7 +49,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
 		String token = request.getHeader("token");
 		if (token != null) {
 			SignatureAlgorithm sa = SignatureAlgorithm.HS512;
-			SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), sa.getJcaName());
+			SecretKeySpec secretKeySpec = new SecretKeySpec(configProps.getSecretKey().getBytes(), sa.getJcaName());
 			DefaultJwtSignatureValidator validator = new DefaultJwtSignatureValidator(sa, secretKeySpec);
 			String[] chunks = token.split("\\.");
 			if (chunks.length < 2) {
