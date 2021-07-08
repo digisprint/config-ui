@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,12 +19,11 @@ import com.liverpool.configuration.beans.ConfigList;
 import com.liverpool.configuration.beans.ConfigMap;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.beans.StaticKeys;
-import com.liverpool.configuration.controller.ConfigurationController;
 import com.liverpool.configuration.service.RequestRedirectService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@WebMvcTest(ConfigurationController.class)
+@SpringBootTest
 @ActiveProfiles("junit")
 @Slf4j
 public class ConfigurationControllerTest {

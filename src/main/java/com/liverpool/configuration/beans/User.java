@@ -1,7 +1,6 @@
 package com.liverpool.configuration.beans;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
