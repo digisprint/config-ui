@@ -40,7 +40,7 @@ public class ConfigurationController extends BaseController {
 	public ResponseEntity<ResponseData> createConfiguration(@PathVariable String type,
 			@RequestBody Configuration config) {
 		redirectService.redirectCreateRequest(type, config);
-		return success(config, HttpStatus.OK, "Configuration created of type:" + type);
+		return success(config, HttpStatus.OK, "Configuration created of type::::" + type);
 	}
 
 	@Operation(summary = "This service used to update configuration")
