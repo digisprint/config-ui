@@ -36,13 +36,17 @@ public class UserServiceIpml implements UserService {
 	private UserRepository userRepo;
 
 	@Autowired
-	private MongoTemplate template;
-
-	@Autowired
 	private RoleRepository roleRepository;
 
 	@Autowired
 	private ConfigrationsProeprties properties;
+
+	public UserServiceIpml(UserRepository userRepo, ConfigrationsProeprties properties,
+			RoleRepository roleRepository) {
+		this.userRepo = userRepo;
+		this.properties = properties;
+		this.roleRepository = roleRepository;
+	}
 
 	@Override
 	public Users getUsers() {
