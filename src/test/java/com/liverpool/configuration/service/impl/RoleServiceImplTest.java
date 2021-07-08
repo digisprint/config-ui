@@ -46,8 +46,7 @@ public class RoleServiceImplTest {
 	
 	@Test
 	public void deleteRoles() {
-		doNothing().when(roleRepository).deleteById(anyString());
-		roleService.deleteRole("r");
+	    doNothing().when(roleService).deleteRole(anyString());
 	}
 	
     @Test
