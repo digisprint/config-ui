@@ -10,16 +10,19 @@ import lombok.Data;
 @Data
 @Configuration
 public class ConfigrationsProeprties {
-	
 	@Value("${liverpool.configuration.statickeys.type}")
 	private String staticKeysTypeName;
-	
+
 	@Value("${liverpool.configuration.configlist.type}")
 	private String configListTypeName;
-	
+
 	@Value("${liverpool.configuration.configmap.type}")
 	private String configMapTypeName;
 	
-	@Value("${liverpool.configuration.secretKey}")
+	@Value("${liverpool.configuration.multivalued.configmap.type}")
+	private String multiValuedConfigMapTypeName;
+  
+  @Value("${liverpool.configuration.secretKey}")
 	private String secretKey;
+  
 }

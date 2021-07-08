@@ -10,8 +10,5 @@ public interface RoleService {
 	void deleteRole(String id);
 	String updateRole(Role role);
 	Role getRoleById(String id);
-
-	
-	
 	
 }

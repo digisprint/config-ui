@@ -1,0 +1,32 @@
+.list-group li {
+    list-style: none;
+}
+.list-group li a {
+    text-decoration: none;
+}
+.bdr-top {
+    border-top: 2px solid #eee;
+}
+table tbody tr td {
+    border-top: 0;
+}
+table thead tr th {
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+}
+.table td, .table th{
+    border-top: 0 !important;
+}
+.bdr-right a {
+    color: #313131;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+.bdr-right a:hover {
+    color: #2C61AD;
+}
+.bdr-right a:active, .bdr-right a:focus {
+    color: #24bdb8;
+}

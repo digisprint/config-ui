@@ -27,10 +27,6 @@ public class User {
 	private String lastName;
 	@NotNull
 	private String email;
-	
 	@DBRef
-    private List<Role> roles;
-
-	
-	
+	private List<Role> roles;
 }

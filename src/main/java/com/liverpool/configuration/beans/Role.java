@@ -14,9 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
-
 	@Id
 	private String id;
 	private String roleName;
-
 }

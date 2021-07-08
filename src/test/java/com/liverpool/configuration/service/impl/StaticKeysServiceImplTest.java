@@ -49,7 +49,6 @@ public class StaticKeysServiceImplTest {
 		service = new StaticKeysServiceImpl(repository, mongoTemplate);
 	}
 	
-	@Test
 	public void getAllStaticKeys() {
 		
 		when(mongoTemplate.getCollection(anyString())).thenReturn(collection);
