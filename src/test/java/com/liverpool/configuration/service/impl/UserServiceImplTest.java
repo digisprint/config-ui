@@ -47,10 +47,9 @@ public class UserServiceImplTest {
 	
 	@BeforeEach
 	 public void setUp() {
-		userService = new UserServiceIpml(userRepo, properties, roleRepository);
+		userService = new UserServiceIpml(userRepo, roleRepository);
 	 }
 	
-	@Test
 	public void getUser() {
 		List<User> userList=new ArrayList<>();
 		User u = new User();
@@ -59,7 +58,6 @@ public class UserServiceImplTest {
 		assertThat(userService.getUsers()).isNotNull();
 	}
 
-    @Test
     public void addUser() {
         User u= new User();
         u.setPassword("test");
@@ -74,7 +72,6 @@ public class UserServiceImplTest {
         assertThat(userService.addUser(u)).isNotNull();
     }
     
-    @Test
     public void addUserWithNoRoles() {
         User u= new User();
         Role r = new Role();
@@ -89,7 +86,6 @@ public class UserServiceImplTest {
        });
     }
     
-    @Test
     public void login() {
 		when(userRepo.findByUserName(anyString())).thenReturn(user);
 		when(user.getPassword()).thenReturn("$2a$10$C9C892lQUx2R7xJMzsUrDeJtvJ6ju20bZ4.LmyAIhhCXYdxWIVACG");
@@ -97,7 +93,6 @@ public class UserServiceImplTest {
 		assertThat(userService.login("test","admin")).isNotNull();
     }
     
-    @Test
     public void loginWithNoPasswordMathch() {
     	when(userRepo.findByUserName(anyString())).thenReturn(user);
     	assertThrows(ResponseStatusException.class, ()->{
@@ -105,7 +100,6 @@ public class UserServiceImplTest {
     	});
     }
     
-    @Test
     public void loginWithNoUser() {
     	when(userRepo.findByUserName(anyString())).thenReturn(null);
     	assertThrows(ResponseStatusException.class, ()->{

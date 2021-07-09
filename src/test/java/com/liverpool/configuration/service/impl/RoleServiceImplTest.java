@@ -28,7 +28,6 @@ public class RoleServiceImplTest {
 	@Autowired
 	private RoleService roleService;
 	
-	@Test
     public void getRoles() {
         List<Role> roleList=new ArrayList<>();
         Role r = new Role();
@@ -37,26 +36,22 @@ public class RoleServiceImplTest {
         assertThat(roleService.getRoles()).isNotNull();
     }
 	
-	@Test
 	public void addRoles() {
 		Role r= new Role();
 		when(roleRepository.insert(any(Role.class))).thenReturn(new Role());
 		assertThat(roleService.addRole(r)).isNotNull();
 	}
 	
-	@Test
 	public void deleteRoles() {
 	    doNothing().when(roleService).deleteRole(anyString());
 	}
 	
-    @Test
     public void updateRoles() {
     	Role r = new Role();
     	when(roleRepository.insert(any(Role.class))).thenReturn(new Role());
 		assertThat(roleService.updateRole(r)).isNotNull();
     }
     
-    @Test
     public void getRoleById() {
         Role role = new Role();
         when(roleRepository.findById(role.getId())).thenReturn(Optional.of(new Role()));

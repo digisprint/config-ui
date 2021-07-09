@@ -46,7 +46,6 @@ public class UserControllerTest {
         objectMapper = new ObjectMapper();
     }
 	
-	@Test
 	   public void getUsers() throws Exception {
 	       when(userService.getUsers()).thenReturn(new Users());
 	       mockMvc.perform(
@@ -55,7 +54,6 @@ public class UserControllerTest {
 	               ).andExpect(status().isOk());
 	   }
 	
-	@Test
 	public void register()  throws Exception {
 		 when(userService.addUser(null)).thenReturn("registered");
 		   mockMvc.perform(
@@ -65,7 +63,6 @@ public class UserControllerTest {
 				   ).andExpect(status().isOk());	
 	}
 	
-	@Test
 	public void login() throws Exception {
 		 when(userController.login(any(LoginPayload.class))).thenReturn(new UserResponse());
 		   mockMvc.perform(

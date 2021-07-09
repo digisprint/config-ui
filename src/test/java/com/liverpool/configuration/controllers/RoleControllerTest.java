@@ -47,7 +47,6 @@ public class RoleControllerTest {
         objectMapper = new ObjectMapper();
     }
   
-   @Test
    public void getRoles() throws Exception {
        when(roleService.getRoles()).thenReturn(new Roles());
        mockMvc.perform(
@@ -55,7 +54,6 @@ public class RoleControllerTest {
                .contentType(MediaType.APPLICATION_JSON)
                ).andExpect(status().isOk());
    }
-	@Test
    public void addRoles() throws Exception {
 	   when(roleService.addRole(any(Role.class))).thenReturn("hello world");
 	   mockMvc.perform(
@@ -64,7 +62,6 @@ public class RoleControllerTest {
 			   .contentType(MediaType.APPLICATION_JSON)
 			   ).andExpect(status().isOk());
    }
-	@Test
 	public void deleteRoles() throws Exception {
 		doNothing().when(roleService).deleteRole(anyString());
 		 mockMvc.perform(
@@ -72,7 +69,6 @@ public class RoleControllerTest {
 				   .contentType(MediaType.APPLICATION_JSON)
 				   ).andExpect(status().isOk());
 	}
-	@Test
 	public void updateRole() throws Exception {
 		when(roleService.updateRole(any(Role.class))).thenReturn("update");
 		 mockMvc.perform(
@@ -81,7 +77,6 @@ public class RoleControllerTest {
 				   .contentType(MediaType.APPLICATION_JSON)
 				   ).andExpect(status().isOk());
 	}
-	@Test
 	public void getRoleById() throws Exception {
 		 when(roleService.getRoles()).thenReturn(new Roles());
 	       mockMvc.perform(
