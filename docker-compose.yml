@@ -1,0 +1,34 @@
+version: '3.5'
+services:
+  mongo-config-ui:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo:/data/db
+  redis-config-ui:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis:/data
+  config-ui-services:
+    image: gcr.io/careful-record-316411/config-ui:latest
+    depends_on:
+     - mongo-config-ui
+     - redis-config-ui
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_HOST=mongo-config-ui
+      - REDIS_HOST=redis-config-ui
+  config-ui-front:
+     image: gcr.io/careful-record-316411/config-ui-front:latest
+     depends_on:
+      - mongo-config-ui
+      - redis-config-ui
+      - config-ui-services
+     ports:
+      - 80:3000
+     environment:
+      - SERVICE_URL=config-ui-services:8080
