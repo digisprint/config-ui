@@ -2,7 +2,7 @@ steps:
 # Execute Test
 - name: maven:3-jdk-8
   entrypoint: mvn
-  args: ["clean compile test"]
+  args: ["clean compile"]
 # Execute Build
 - name: maven:3-jdk-8
   entrypoint: mvn
