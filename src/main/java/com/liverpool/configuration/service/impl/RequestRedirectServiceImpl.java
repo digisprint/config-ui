@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -138,7 +139,7 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		Map<String, Object> beans = context.getBeansWithAnnotation(BeanConfiguration.class);
 		beans.forEach((key, value) -> {
 			ConfigurationTypes configType = new ConfigurationTypes();
-			Map<String, String> configMap = new HashMap<String, String>();
+			Map<String, String> configMap = new TreeMap<String, String>();
 			Field[] fields = value.getClass().getDeclaredFields();
 			Arrays.stream(fields).forEach(field -> {
 				DisplayProperty annotation = field.getAnnotation(DisplayProperty.class);
@@ -152,7 +153,6 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 			configType.setBeanName(value.getClass().getCanonicalName());
 			configType.setDisplayName(value.getClass().getAnnotation(BeanConfiguration.class).name());
 			configType.setUrlPath(value.getClass().getAnnotation(BeanConfiguration.class).url_path());
-			configType.setDisplayProperty("key");
 			configType.setProperties(configMap);
 			configTypes.add(configType);
 		});
