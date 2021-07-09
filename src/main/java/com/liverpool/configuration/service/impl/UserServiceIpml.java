@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,7 @@ import com.liverpool.configuration.beans.Role;
 import com.liverpool.configuration.beans.User;
 import com.liverpool.configuration.beans.UserResponse;
 import com.liverpool.configuration.beans.Users;
+import com.liverpool.configuration.config.JwtTokenUtil;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.repository.RoleRepository;
 import com.liverpool.configuration.repository.UserRepository;
@@ -40,6 +40,9 @@ public class UserServiceIpml implements UserService {
 
 	@Autowired
 	private ConfigrationsProeprties properties;
+	
+	@Autowired
+	private JwtTokenUtil jwtUtils;
 
 	public UserServiceIpml(UserRepository userRepo, ConfigrationsProeprties properties,
 			RoleRepository roleRepository) {
@@ -87,7 +90,7 @@ public class UserServiceIpml implements UserService {
 		if (isPasswordMatch) {
 			UserResponse userresponse = new UserResponse();
 			userresponse.setStatus(Boolean.TRUE);
-			userresponse.setToken(generateToken(user));
+			userresponse.setToken(jwtUtils.generateToken(user));
 			return userresponse;
 		} else {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name or password is wrong");
@@ -107,27 +110,15 @@ public class UserServiceIpml implements UserService {
 		return encodedPassword;
 	}
 
-	private String generateToken(User user) {
-		Calendar currentTimeNow = Calendar.getInstance();
-		currentTimeNow.add(Calendar.MINUTE, 30);
-		Date expireTime = currentTimeNow.getTime();
-		JwtBuilder token = Jwts.builder().setIssuer("CongfigServer").setSubject("ConfigLogin")
-				.claim("userName", user.getUserName()).claim("userId", user.getId()).claim("roles", user.getRoles())
-				.setIssuedAt(currentTimeNow.getTime()).setExpiration(expireTime)
-				.signWith(SignatureAlgorithm.HS512, properties.getSecretKey().getBytes());
-
-		return token.compact();
-	}
-
 	public void insertInitialData() {
 		Optional<User> user = userRepo.findById("admin");
 		if (!user.isPresent()) {
 			User u = new User();
 			u.setUserName("admin");
 			u.setPassword("admin");
-			u.setFirstName("rahul");
-			u.setLastName("surapanani");
-			u.setEmail("rahul@gmail.com");
+			u.setFirstName("ADMIN");
+			u.setLastName("ADMIN");
+			u.setEmail("admin@test.com");
 			u.setId("admin");
 			List<Role> roles = new ArrayList<>();
 			Role role = new Role();
