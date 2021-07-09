@@ -47,7 +47,7 @@ public class UserServiceImplTest {
 	
 	@BeforeEach
 	 public void setUp() {
-		userService = new UserServiceIpml(userRepo, roleRepository);
+		userService = new UserServiceIpml(userRepo, properties, roleRepository);
 	 }
 	
 	public void getUser() {
