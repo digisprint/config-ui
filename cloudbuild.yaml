@@ -1,13 +1,9 @@
 steps:
-# Execute Test
-- name: maven:3-jdk-8
+# Execute Compile and Package
+- name: maven:3.8.1
   entrypoint: mvn
-  args: ["clean","compile"]
-# Execute Build
-- name: maven:3-jdk-8
-  entrypoint: mvn
-  args: ["package", "-Dmaven.test.skip=true"]
+  args: ["compile","package", "-Dmaven.test.skip=true"]
 # Create Docker Image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/config-ui', '.']
-images: ['gcr.io/$PROJECT_ID/config-ui'] 
+images: ['gcr.io/$PROJECT_ID/config-ui','gcr.io/$PROJECT_ID/config-ui:$SHORT_SHA'] 
