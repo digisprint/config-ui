@@ -1,8 +1,12 @@
 steps:
-# Execute Build, Test and Package
+# Execute Test
 - name: maven:3-jdk-8
   entrypoint: mvn
-  args: ["clean compile package test site", "-Dmaven.test.skip=true"]
+  args: ["clean compile test"]
+# Execute Build
+- name: maven:3-jdk-8
+  entrypoint: mvn
+  args: ["package", "-Dmaven.test.skip=true"]
 # Create Docker Image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/config-ui', '.']
