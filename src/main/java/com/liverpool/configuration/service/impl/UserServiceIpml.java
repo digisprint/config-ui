@@ -85,7 +85,7 @@ public class UserServiceIpml implements UserService {
 	@Override
 	public UserResponse login(String userName, String password) {
 
-		User user = userRepo.findByUserName(userName);
+		User user = userRepo.findById(userName).orElseThrow(RuntimeException::new);
 		if (user == null) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name oes not exist");
 		}
