@@ -1,14 +1,11 @@
 package com.liverpool.configuration.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +33,7 @@ public class StaticKeysServiceImpl implements StaticKeysService{
 	}
 
 	@Override
-	@Caching(evict = { @CacheEvict(value = "staticKeysCache", allEntries = true), }, 
-	 put = { @CachePut(value = "staticKeysCache", key = "#config.key") })
+	@CacheEvict(value = "staticKeysCache", allEntries = true)
 	public void createStaticKey(@NonNull StaticKeys config) {
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue())
@@ -46,7 +42,7 @@ public class StaticKeysServiceImpl implements StaticKeysService{
 	}
 
 	@Override
-	@CachePut(value = "staticKeysCache", key = "#config.key")
+	@CacheEvict(value = "staticKeysCache", allEntries = true)
 	public void updateStaticKey(@NonNull StaticKeys config) {
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue())
@@ -69,7 +65,7 @@ public class StaticKeysServiceImpl implements StaticKeysService{
 	}
 
 	@Override
-	@CacheEvict(value = "staticKeysCache", key = "#key")
+	@CacheEvict(value = "staticKeysCache", allEntries = true)
 	public void deleteStaticKey(@NonNull String key) {
 		Document filter = new Document(ConfigurationConstants.ID,key);
 		mongoTemplate.getCollection(staticKeysCollectionName).deleteOne(filter);

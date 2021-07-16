@@ -5,9 +5,7 @@ import java.util.List;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +31,7 @@ public class MultiValuedConfigMapServiceImpl implements MultiValuedConfigMapServ
 	}
 	
 	@Override
-	@Caching(evict = { @CacheEvict(value = "multiValuedConfigMapCache", allEntries = true), }, 
-	 put = { @CachePut(value = "multiValuedConfigMapCache", key = "#configMap.key") })
+	@CacheEvict(value = "multiValuedConfigMapCache", allEntries = true)
 	public void createMultiValuedConfigMap(MultiValuedConfigMap configMap) {
 		Document doc = new Document(ConfigurationConstants.ID,configMap.getKey())
 				.append(ConfigurationConstants.VALUE, configMap.getValue());
@@ -42,7 +39,7 @@ public class MultiValuedConfigMapServiceImpl implements MultiValuedConfigMapServ
 	}
 
 	@Override
-	@CachePut(value = "multiValuedConfigMapCache", key = "#configMap.key")
+	@CacheEvict(value = "multiValuedConfigMapCache", allEntries = true)
 	public void updateMultiValuedConfigMap(MultiValuedConfigMap configMap) {
 		Document doc = new Document(ConfigurationConstants.ID,configMap.getKey())
 				.append(ConfigurationConstants.VALUE, configMap.getValue());
@@ -65,7 +62,7 @@ public class MultiValuedConfigMapServiceImpl implements MultiValuedConfigMapServ
 	}
 
 	@Override
-	@CacheEvict(value = "multiValuedConfigMapCache", key = "#key")
+	@CacheEvict(value = "multiValuedConfigMapCache", allEntries = true)
 	public void deleteMultiValuedConfigMap(String key) {
 		Document filter = new Document(ConfigurationConstants.ID,key);
 		mongoTemplate.getCollection(multiValuedConfigMapCollectionName).deleteOne(filter);

@@ -5,9 +5,7 @@ import java.util.List;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +33,7 @@ public class ConfigMapServiceImpl implements ConfigMapService{
 	}
 	
 	@Override
-	@Caching(evict = { @CacheEvict(value = "configMapCache", allEntries = true), }, 
-	 put = { @CachePut(value = "configMapCache", key = "#config.key") })
+	@CacheEvict(value = "configMapCache", allEntries = true)
 	public void createConfigMap(@NonNull ConfigMap config) {
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue());
@@ -44,7 +41,7 @@ public class ConfigMapServiceImpl implements ConfigMapService{
 	}
 
 	@Override
-	@CachePut(value = "configMapCache", key = "#config.key")
+	@CacheEvict(value = "configMapCache", allEntries = true)
 	public void updateConfigMap(@NonNull ConfigMap config) {
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue());
@@ -66,7 +63,7 @@ public class ConfigMapServiceImpl implements ConfigMapService{
 	}
 
 	@Override
-	@CacheEvict(value = "configMapCache", key = "#key")
+	@CacheEvict(value = "configMapCache", allEntries = true)
 	public void deleteConfigMap(@NonNull String key) {
 		Document filter = new Document(ConfigurationConstants.ID,key);
 		mongoTemplate.getCollection(configMapCollectionName).deleteOne(filter);
