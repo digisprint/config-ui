@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@BeanConfiguration(name="Static Keys",url_path="staticKeys")
+@BeanConfiguration(name="Static Keys",url_path="staticKeys", accessPrivilegeName="statickeys")
 @Component
 public class StaticKeys implements Serializable{
 	

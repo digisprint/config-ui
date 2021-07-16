@@ -12,4 +12,5 @@ import java.lang.annotation.Target;
 public @interface BeanConfiguration {
 	String name() default "bean";
 	String url_path();
+	String accessPrivilegeName();
 }
