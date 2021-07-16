@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.liverpool.configuration.beans.Role;
 import com.liverpool.configuration.beans.User;
+import com.liverpool.configuration.beans.UserRequest;
 import com.liverpool.configuration.beans.UserResponse;
 import com.liverpool.configuration.beans.Users;
 import com.liverpool.configuration.config.JwtTokenUtil;
@@ -73,7 +75,9 @@ public class UserServiceIpml implements UserService {
 	}
 	
 	@Override
-	public String updateUser(User user) {
+	public String updateUser(UserRequest userReq) {
+		User user = new User();
+		BeanUtils.copyProperties(userReq, user);
 		userRepo.save(user);
 		return "Successfully updated " +user.getUserName();
 	}

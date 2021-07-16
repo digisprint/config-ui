@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.liverpool.configuration.beans.LoginPayload;
 import com.liverpool.configuration.beans.User;
+import com.liverpool.configuration.beans.UserRequest;
 import com.liverpool.configuration.beans.UserResponse;
 import com.liverpool.configuration.beans.Users;
 import com.liverpool.configuration.service.UserService;
@@ -37,8 +38,8 @@ public class UserController {
 	}
 	
 	@PutMapping("/user")
-	public String updateUser(@RequestBody @Valid User user) {
-		return userService.updateUser(user);
+	public String updateUser(@RequestBody UserRequest userReq) {
+		return userService.updateUser(userReq);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.liverpool.configuration.service;
 
 import com.liverpool.configuration.beans.User;
+import com.liverpool.configuration.beans.UserRequest;
 import com.liverpool.configuration.beans.UserResponse;
 import com.liverpool.configuration.beans.Users;
 
@@ -10,7 +11,7 @@ public interface UserService {
 
 	String addUser(User user);
 	
-	String updateUser(User user);
+	String updateUser(UserRequest userReq);
 
 	UserResponse login(String userName, String password);
 
