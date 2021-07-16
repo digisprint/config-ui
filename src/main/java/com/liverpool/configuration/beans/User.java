@@ -1,7 +1,7 @@
 package com.liverpool.configuration.beans;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +17,6 @@ import lombok.Setter;
 @Setter
 public class User {
 	@Id
-	private String id;
 	@NotNull
 	private String userName;
 	@NotNull
@@ -30,4 +29,6 @@ public class User {
 	private String email;
 	@DBRef
 	private List<Role> roles;
+	
+	private Map<String, String> accessPrivileges;
 }

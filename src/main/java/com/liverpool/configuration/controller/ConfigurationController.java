@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.liverpool.configuration.beans.Configuration;
@@ -90,8 +91,8 @@ public class ConfigurationController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@GetMapping("/config")
-	public ResponseEntity<ResponseData> getConfigurationTypes() {
-		ResponseData resp = redirectService.getConfigurationTypes();
+	public ResponseEntity<ResponseData> getConfigurationTypes(@RequestHeader("token") String token) {
+		ResponseData resp = redirectService.getConfigurationTypes(token);
 		return success(resp.getBody(), HttpStatus.OK, "Getting the available configuration types");
 	}
 

@@ -3,7 +3,6 @@ package com.liverpool.configuration.service.impl;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,7 +20,10 @@ import com.liverpool.configuration.beans.DisplayProperty;
 import com.liverpool.configuration.beans.MultiValuedConfigMap;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.beans.StaticKeys;
+import com.liverpool.configuration.beans.User;
+import com.liverpool.configuration.config.JwtTokenUtil;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
+import com.liverpool.configuration.repository.UserRepository;
 import com.liverpool.configuration.service.ConfigListService;
 import com.liverpool.configuration.service.ConfigMapService;
 import com.liverpool.configuration.service.MultiValuedConfigMapService;
@@ -41,16 +43,23 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	
 	private MultiValuedConfigMapService multiValuedConfigService;
 	
+	private JwtTokenUtil jwtUtil;
+	
+	private UserRepository userRepo;
+	
 	@Autowired
 	private ApplicationContext context;
 	
 	public RequestRedirectServiceImpl(ConfigrationsProeprties properties, StaticKeysService staticKeyService, 
-			ConfigListService configListService,ConfigMapService configMapService, MultiValuedConfigMapService multiValuedConfigService){
+			ConfigListService configListService,ConfigMapService configMapService, MultiValuedConfigMapService multiValuedConfigService,
+			JwtTokenUtil jwtUtil, UserRepository userRepo){
 		this.staticKeyService = staticKeyService;
 		this.configListService = configListService;
 		this.configMapService = configMapService;
 		this.multiValuedConfigService = multiValuedConfigService;
 		this.properties = properties;
+		this.jwtUtil = jwtUtil;
+		this.userRepo = userRepo;
 	}
 	
 	@Override
@@ -132,11 +141,14 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	}
 
 	@Override
-	public ResponseData getConfigurationTypes() {
+	public ResponseData getConfigurationTypes(String token) {
 		
 		List<ConfigurationTypes> configTypes = new ArrayList<ConfigurationTypes>();
 		ResponseData resp = new ResponseData();
 		Map<String, Object> beans = context.getBeansWithAnnotation(BeanConfiguration.class);
+		String usernameFromToken = jwtUtil.getUsernameFromToken(token);
+		User user = userRepo.findByUserName(usernameFromToken);
+		Map<String, String> accessPrivileges = user.getAccessPrivileges();
 		beans.forEach((key, value) -> {
 			ConfigurationTypes configType = new ConfigurationTypes();
 			Map<String, String> configMap = new TreeMap<String, String>();
@@ -150,12 +162,21 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 					configMap.put(field.getName(),annotation.uiPropType());
 				}
 			});
-			configType.setBeanName(value.getClass().getCanonicalName());
+			String accessPrivilegeName = value.getClass().getAnnotation(BeanConfiguration.class).accessPrivilegeName();
+			configType.setBeanName(accessPrivilegeName);
 			configType.setDisplayName(value.getClass().getAnnotation(BeanConfiguration.class).name());
 			configType.setUrlPath(value.getClass().getAnnotation(BeanConfiguration.class).url_path());
 			configType.setProperties(configMap);
+			if(accessPrivileges != null && !accessPrivileges.isEmpty()) {
+				accessPrivileges.forEach((accessKey, accessValue) -> {
+					if(accessPrivilegeName.equalsIgnoreCase(accessKey)) {
+						configType.setAccess(accessValue);
+					}
+				});
+			}
 			configTypes.add(configType);
 		});
+		
 		
 		resp.setBody(configTypes);
 		return resp;

@@ -1,8 +1,6 @@
 package com.liverpool.configuration.service.impl;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -24,10 +22,6 @@ import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.repository.RoleRepository;
 import com.liverpool.configuration.repository.UserRepository;
 import com.liverpool.configuration.service.UserService;
-
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class UserServiceIpml implements UserService {
@@ -77,6 +71,12 @@ public class UserServiceIpml implements UserService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "some of the roles are not found");
 		}
 	}
+	
+	@Override
+	public String updateUser(User user) {
+		userRepo.save(user);
+		return "Successfully updated " +user.getUserName();
+	}
 
 	@Override
 	public UserResponse login(String userName, String password) {
@@ -119,7 +119,6 @@ public class UserServiceIpml implements UserService {
 			u.setFirstName("ADMIN");
 			u.setLastName("ADMIN");
 			u.setEmail("admin@test.com");
-			u.setId("admin");
 			List<Role> roles = new ArrayList<>();
 			Role role = new Role();
 			role.setId("admin");
@@ -131,4 +130,5 @@ public class UserServiceIpml implements UserService {
 			addUser(u);
 		}
 	}
+
 }

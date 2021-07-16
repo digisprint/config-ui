@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@BeanConfiguration(name="Multi Valued Configuration",url_path="multiValuedConfigMap")
+@BeanConfiguration(name="Multi Valued Configuration",url_path="multiValuedConfigMap", accessPrivilegeName="multivaluedconfigmap")
 @Component
 public class MultiValuedConfigMap implements Serializable{
 	@Id

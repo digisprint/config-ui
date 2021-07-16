@@ -18,7 +18,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@BeanConfiguration(name="List Configurations",url_path="configList")
+@BeanConfiguration(name="List Configurations",url_path="configList", accessPrivilegeName="configlist")
 @Component
 public class ConfigList implements Serializable{
 	@Id
