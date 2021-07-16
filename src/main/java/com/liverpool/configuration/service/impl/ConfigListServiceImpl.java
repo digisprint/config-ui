@@ -1,14 +1,11 @@
 package com.liverpool.configuration.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +34,7 @@ public class ConfigListServiceImpl implements ConfigListService{
 	
 
 	@Override
-	@Caching(evict = { @CacheEvict(value = "configListCache", allEntries = true), }, 
-			 put = { @CachePut(value = "configListCache", key = "#config.key") })
+	@CacheEvict(value = "configListCache", allEntries = true)
 	public void createConfigList(@NonNull ConfigList config) {
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue());
@@ -46,7 +42,7 @@ public class ConfigListServiceImpl implements ConfigListService{
 	}
 
 	@Override
-	@CachePut(value = "configListCache", key = "#config.key")
+	@CacheEvict(value = "configListCache", allEntries = true)
 	public void updateConfigList(@NonNull ConfigList config) {
 		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
 				.append(ConfigurationConstants.VALUE, config.getValue());
@@ -68,7 +64,7 @@ public class ConfigListServiceImpl implements ConfigListService{
 	}
 
 	@Override
-	@CacheEvict(value = "configListCache", key = "#key")
+	@CacheEvict(value = "configListCache", allEntries = true)
 	public void deleteConfigList(@NonNull String key) {
 		Document filter = new Document(ConfigurationConstants.ID,key);
 		mongoTemplate.getCollection(configListCollectionName).deleteOne(filter);
