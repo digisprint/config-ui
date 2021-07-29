@@ -174,7 +174,9 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 					}
 				});
 			}
-			configTypes.add(configType);
+			if(configType.getAccess() != null && !"none".equalsIgnoreCase(configType.getAccess())) {
+				configTypes.add(configType);
+			}
 		});
 		
 		
