@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class LiverpoolConfigurationApplication extends SpringBootServletInitializer {
+public class ConfigurationApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LiverpoolConfigurationApplication.class, args);
+		SpringApplication.run(ConfigurationApplication.class, args);
 	}
 }

@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import com.liverpool.configuration.beans.BeanConfiguration;
+import com.liverpool.configuration.annotations.BeanConfiguration;
+import com.liverpool.configuration.annotations.DisplayProperty;
 import com.liverpool.configuration.beans.ConfigList;
 import com.liverpool.configuration.beans.ConfigMap;
 import com.liverpool.configuration.beans.Configuration;
 import com.liverpool.configuration.beans.ConfigurationTypes;
-import com.liverpool.configuration.beans.DisplayProperty;
 import com.liverpool.configuration.beans.MultiValuedConfigMap;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.beans.StaticKeys;

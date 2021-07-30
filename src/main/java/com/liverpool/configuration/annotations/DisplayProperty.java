@@ -1,4 +1,4 @@
-package com.liverpool.configuration.beans;
+package com.liverpool.configuration.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -6,11 +6,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-public @interface BeanConfiguration {
-	String name() default "bean";
-	String url_path();
-	String accessPrivilegeName();
+public @interface DisplayProperty {
+	boolean display() default false;
+	String uiPropType();
 }

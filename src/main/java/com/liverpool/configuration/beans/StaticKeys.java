@@ -9,6 +9,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+import com.liverpool.configuration.annotations.BeanConfiguration;
+import com.liverpool.configuration.annotations.DisplayProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
