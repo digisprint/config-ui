@@ -83,6 +83,12 @@ public class UserServiceIpml implements UserService {
 	}
 
 	@Override
+	public String deleteUser(String userId) {
+		userRepo.deleteById(userId);
+		return "Successfully deleted " +userId;
+	}
+	
+	@Override
 	public UserResponse login(String userName, String password) {
 
 		User user = userRepo.findById(userName).orElseThrow(RuntimeException::new);
