@@ -15,7 +15,7 @@ import com.liverpool.configuration.beans.Roles;
 import com.liverpool.configuration.service.RoleService;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(originPatterns = "localhost*")
 public class RoleController {
 	
 	@Autowired

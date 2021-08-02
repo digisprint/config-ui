@@ -20,7 +20,7 @@ import com.liverpool.configuration.beans.Users;
 import com.liverpool.configuration.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(originPatterns = "localhost*")
 public class UserController {
 	
 	@Autowired

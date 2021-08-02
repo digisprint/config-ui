@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(originPatterns = "localhost*")
 public class ConfigurationController extends BaseController {
 
 	private RequestRedirectService redirectService;
