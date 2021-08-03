@@ -27,7 +27,7 @@ import lombok.ToString;
 public class MultiValuedConfigMap implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")
-	@DisplayProperty(display = true,uiPropType = "String", order=1)
+	@DisplayProperty(display = true,uiPropType = "String", order=1, objectKey = true)
 	private String key;
 	@DisplayProperty(uiPropType = "String", order=2)
 	private String type;

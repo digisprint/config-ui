@@ -26,7 +26,7 @@ public class EmailTemplate implements Serializable{
 
 	@Id
 	@NotBlank(message = "Key should not be empty")
-	@DisplayProperty(display = true,uiPropType = "String", order=1)
+	@DisplayProperty(display = true,uiPropType = "String", order=1, objectKey = true)
 	public String templateName;
 	
 	@NotEmpty(message = "Value should not be empty")

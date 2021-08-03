@@ -13,4 +13,5 @@ public @interface DisplayProperty {
 	boolean display() default false;
 	String uiPropType();
 	int order() default 1;
+	boolean objectKey() default false;
 }

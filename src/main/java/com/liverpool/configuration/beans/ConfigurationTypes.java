@@ -14,5 +14,6 @@ public class ConfigurationTypes {
 	private String displayProperty;
 	private String urlPath;
 	private String access;
+	private String objectKey;
 	private Map<String, String> properties;
 }

@@ -26,7 +26,7 @@ import lombok.ToString;
 public class ConfigMap implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")
-	@DisplayProperty(display = true,uiPropType = "String", order=1)
+	@DisplayProperty(display = true,uiPropType = "String", order=1, objectKey = true)
 	private String key;
 	
 	@NotEmpty(message = "Value should not be empty")

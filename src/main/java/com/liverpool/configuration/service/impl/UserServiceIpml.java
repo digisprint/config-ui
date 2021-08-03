@@ -78,6 +78,8 @@ public class UserServiceIpml implements UserService {
 	public String updateUser(UserRequest userReq) {
 		User user = new User();
 		BeanUtils.copyProperties(userReq, user);
+		String encryptedPassword = encryptPassword(user.getPassword());
+		user.setPassword(encryptedPassword);
 		userRepo.save(user);
 		return "Successfully updated " +user.getUserName();
 	}

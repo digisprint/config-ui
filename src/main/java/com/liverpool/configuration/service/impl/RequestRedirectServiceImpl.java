@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -178,6 +179,9 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 					if(annotation.display()) {
 						configType.setDisplayProperty(f.getName());
 					}
+					if(annotation.objectKey()) {
+						configType.setObjectKey(f.getName());
+					}
 					configMap.put(f.getName(),annotation.uiPropType());
 				}
 	        }
@@ -193,8 +197,10 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 					}
 				});
 			}
-			
-			if(configType.getAccess() != null && !"none".equalsIgnoreCase(configType.getAccess())) {
+			if(StringUtils.isBlank(configType.getAccess())) {
+				configType.setAccess("view");
+			}
+			if(!"none".equalsIgnoreCase(configType.getAccess())) {
 				configTypes.add(configType);
 			}
 		});

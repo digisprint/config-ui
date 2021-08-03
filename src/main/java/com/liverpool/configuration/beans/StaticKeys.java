@@ -26,7 +26,7 @@ public class StaticKeys implements Serializable{
 	
 	@Id
 	@NotBlank(message = "Key should not be empty")
-	@DisplayProperty(display = true,uiPropType = "String", order=1)
+	@DisplayProperty(display = true,uiPropType = "String", order=1, objectKey = true)
 	private String key;
 	@NotBlank(message = "Value should not be empty")
 	@DisplayProperty(uiPropType = "String", order=2)
