@@ -12,4 +12,5 @@ import java.lang.annotation.Target;
 public @interface DisplayProperty {
 	boolean display() default false;
 	String uiPropType();
+	int order() default 1;
 }

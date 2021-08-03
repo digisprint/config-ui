@@ -26,22 +26,22 @@ public class EmailTemplate implements Serializable{
 
 	@Id
 	@NotBlank(message = "Key should not be empty")
-	@DisplayProperty(display = true,uiPropType = "String")
+	@DisplayProperty(display = true,uiPropType = "String", order=1)
 	public String templateName;
 	
 	@NotEmpty(message = "Value should not be empty")
-	@DisplayProperty(uiPropType = "String")
+	@DisplayProperty(uiPropType = "String", order=2)
 	public String subject;
 	
 	@NotEmpty(message = "Value should not be empty")
-	@DisplayProperty(uiPropType = "String")
+	@DisplayProperty(uiPropType = "String", order=3)
 	public String header;
 	
 	@NotEmpty(message = "Value should not be empty")
-	@DisplayProperty(uiPropType = "String")
+	@DisplayProperty(uiPropType = "String", order=4)
 	public String body;
 	
 	@NotEmpty(message = "Value should not be empty")
-	@DisplayProperty(uiPropType = "String")
+	@DisplayProperty(uiPropType = "String", order=5)
 	public String footer;
 }

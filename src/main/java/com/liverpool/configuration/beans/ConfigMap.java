@@ -26,11 +26,11 @@ import lombok.ToString;
 public class ConfigMap implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")
-	@DisplayProperty(display = true,uiPropType = "String")
+	@DisplayProperty(display = true,uiPropType = "String", order=1)
 	private String key;
 	
 	@NotEmpty(message = "Value should not be empty")
-	@DisplayProperty(uiPropType = "Map")
+	@DisplayProperty(uiPropType = "Map", order=2)
 	private Map<String, String> value;
 
 

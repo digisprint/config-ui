@@ -27,12 +27,12 @@ import lombok.ToString;
 public class MultiValuedConfigMap implements Serializable{
 	@Id
 	@NotBlank(message = "Key should not be empty")
-	@DisplayProperty(display = true,uiPropType = "String")
+	@DisplayProperty(display = true,uiPropType = "String", order=1)
 	private String key;
-	@DisplayProperty(uiPropType = "String")
+	@DisplayProperty(uiPropType = "String", order=2)
 	private String type;
 	@NotEmpty(message = "Value should not be empty")
-	@DisplayProperty(uiPropType = "Map")
+	@DisplayProperty(uiPropType = "Map", order=3)
 	private Map<@NotBlank String, List<@NotBlank String>> value;
 
 
