@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.liverpool.configuration.annotations.BeanConfiguration;
 import com.liverpool.configuration.annotations.DisplayProperty;
 
@@ -32,6 +33,7 @@ public class ConfigDate implements Serializable{
 	
 	@NotEmpty(message = "Value should not be empty")
 	@DisplayProperty(uiPropType = "List<Date>", order=2)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private List<Date> value;
 	
 	@DisplayProperty(uiPropType = "Boolean", order=3)
