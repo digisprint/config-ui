@@ -72,7 +72,7 @@ public class ConfigurationController extends BaseController {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
-	@GetMapping("/config/{type}/{key}")
+	@GetMapping({"/config/{type}/{key}","/getObjectBykey/{type}/{key}"})
 	public ResponseEntity<ResponseData> getConfigurationByKey(@PathVariable String type, @PathVariable String key) {
 		ResponseData resp = redirectService.getConfigurationByKey(type, key);
 		return success(resp.getBody(), HttpStatus.OK, "Displaying configuration for key " + key);
