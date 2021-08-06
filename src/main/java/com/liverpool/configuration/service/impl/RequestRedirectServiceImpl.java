@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.liverpool.configuration.annotations.BeanConfiguration;
 import com.liverpool.configuration.annotations.DisplayProperty;
+import com.liverpool.configuration.beans.ConfigDate;
 import com.liverpool.configuration.beans.ConfigList;
 import com.liverpool.configuration.beans.ConfigMap;
 import com.liverpool.configuration.beans.Configuration;
@@ -26,6 +27,7 @@ import com.liverpool.configuration.beans.User;
 import com.liverpool.configuration.config.JwtTokenUtil;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.repository.UserRepository;
+import com.liverpool.configuration.service.ConfigDateService;
 import com.liverpool.configuration.service.ConfigListService;
 import com.liverpool.configuration.service.ConfigMapService;
 import com.liverpool.configuration.service.MultiValuedConfigMapService;
@@ -41,6 +43,8 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	
 	private ConfigMapService configMapService;
 	
+	private ConfigDateService configDateService;
+	
 	private ConfigrationsProeprties properties;
 	
 	private MultiValuedConfigMapService multiValuedConfigService;
@@ -53,11 +57,12 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	private ApplicationContext context;
 	
 	public RequestRedirectServiceImpl(ConfigrationsProeprties properties, StaticKeysService staticKeyService, 
-			ConfigListService configListService,ConfigMapService configMapService, MultiValuedConfigMapService multiValuedConfigService,
+			ConfigListService configListService,ConfigMapService configMapService, ConfigDateService configDateService, MultiValuedConfigMapService multiValuedConfigService,
 			JwtTokenUtil jwtUtil, UserRepository userRepo){
 		this.staticKeyService = staticKeyService;
 		this.configListService = configListService;
 		this.configMapService = configMapService;
+		this.configDateService = configDateService;
 		this.multiValuedConfigService = multiValuedConfigService;
 		this.properties = properties;
 		this.jwtUtil = jwtUtil;
@@ -74,6 +79,8 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 			configMapService.createConfigMap(config.getConfigMap());
 		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
 			multiValuedConfigService.createMultiValuedConfigMap(config.getMultiValuedConfigMap());
+		}  else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
+			configDateService.createConfigDate(config.getConfigDate());
 		}
 	}
 
@@ -87,6 +94,8 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 			configMapService.updateConfigMap(config.getConfigMap());
 		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
 			multiValuedConfigService.updateMultiValuedConfigMap(config.getMultiValuedConfigMap());
+		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
+			configDateService.updateConfigDate(config.getConfigDate());
 		}
 	}
 
@@ -105,6 +114,9 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
 			List<MultiValuedConfigMap> allMultiValuedConfigMaps = multiValuedConfigService.getAllMultiValuedConfigMaps();
 			resp.setBody(allMultiValuedConfigMaps);
+		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
+			List<ConfigDate> allConfigLists = configDateService.getAllConfigLists();
+			resp.setBody(allConfigLists);
 		}
 		return resp;
 	}
@@ -124,6 +136,9 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
 			MultiValuedConfigMap multiValuedConfigMap = multiValuedConfigService.getMultiValuedConfigMapByKey(key);
 			resp.setBody(multiValuedConfigMap);
+		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
+			ConfigDate configDate = configDateService.getConfigDateByKey(key);
+			resp.setBody(configDate);
 		}
 		return resp;
 	}
@@ -139,6 +154,8 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 			configMapService.deleteConfigMap(key);
 		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
 			multiValuedConfigService.deleteMultiValuedConfigMap(key);
+		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
+			configDateService.deleteConfigDate(key);
 		}
 	}
 

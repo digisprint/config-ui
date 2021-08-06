@@ -19,6 +19,9 @@ public class ConfigrationsProeprties {
 	@Value("${liverpool.configuration.configmap.type}")
 	private String configMapTypeName;
 	
+	@Value("${liverpool.configuration.configdate.type}")
+	private String configDateTypeName;
+	
 	@Value("${liverpool.configuration.multivalued.configmap.type}")
 	private String multiValuedConfigMapTypeName;
   

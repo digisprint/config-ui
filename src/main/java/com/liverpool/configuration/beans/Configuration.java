@@ -17,6 +17,8 @@ public class Configuration {
 	@Valid
 	private ConfigMap configMap;
 	@Valid
+	private ConfigDate configDate;
+	@Valid
 	private MultiValuedConfigMap multiValuedConfigMap;
 
 }
