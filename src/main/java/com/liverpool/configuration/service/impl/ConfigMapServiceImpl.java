@@ -13,7 +13,6 @@ import com.liverpool.configuration.beans.ConfigMap;
 import com.liverpool.configuration.constants.ConfigurationConstants;
 import com.liverpool.configuration.repository.ConfigMapRepository;
 import com.liverpool.configuration.service.ConfigMapService;
-import com.mongodb.client.model.ReplaceOptions;
 
 import lombok.NonNull;
 
@@ -35,19 +34,13 @@ public class ConfigMapServiceImpl implements ConfigMapService{
 	@Override
 	@CacheEvict(value = "configMapCache", allEntries = true)
 	public void createConfigMap(@NonNull ConfigMap config) {
-		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
-				.append(ConfigurationConstants.VALUE, config.getValue());
-		mongoTemplate.getCollection(configMapCollectionName).insertOne(doc);
+		repository.insert(config);
 	}
 
 	@Override
 	@CacheEvict(value = "configMapCache", allEntries = true)
 	public void updateConfigMap(@NonNull ConfigMap config) {
-		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
-				.append(ConfigurationConstants.VALUE, config.getValue());
-		Document filter = new Document(ConfigurationConstants.ID,config.getKey());
-		ReplaceOptions options = new ReplaceOptions().upsert(true);
-		mongoTemplate.getCollection(configMapCollectionName).replaceOne(filter, doc, options);
+		repository.save(config);
 	}
 
 	@Override

@@ -41,4 +41,8 @@ public class ConfigDate implements Serializable{
 	
 	@DisplayProperty(uiPropType = "Boolean", order=4)
 	private boolean sundayHoliday;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DisplayProperty(uiPropType = "Date", order=5)
+	private Date dateOfBirth;
 }

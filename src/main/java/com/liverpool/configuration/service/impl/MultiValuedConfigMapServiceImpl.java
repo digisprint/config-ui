@@ -33,9 +33,7 @@ public class MultiValuedConfigMapServiceImpl implements MultiValuedConfigMapServ
 	@Override
 	@CacheEvict(value = "multiValuedConfigMapCache", allEntries = true)
 	public void createMultiValuedConfigMap(MultiValuedConfigMap configMap) {
-		Document doc = new Document(ConfigurationConstants.ID,configMap.getKey())
-				.append(ConfigurationConstants.VALUE, configMap.getValue());
-		mongoTemplate.getCollection(multiValuedConfigMapCollectionName).insertOne(doc);
+		repository.insert(configMap);
 	}
 
 	@Override

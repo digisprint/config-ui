@@ -13,7 +13,6 @@ import com.liverpool.configuration.beans.StaticKeys;
 import com.liverpool.configuration.constants.ConfigurationConstants;
 import com.liverpool.configuration.repository.StaticKeysRepository;
 import com.liverpool.configuration.service.StaticKeysService;
-import com.mongodb.client.model.ReplaceOptions;
 
 import lombok.NonNull;
 
@@ -35,21 +34,13 @@ public class StaticKeysServiceImpl implements StaticKeysService{
 	@Override
 	@CacheEvict(value = "staticKeysCache", allEntries = true)
 	public void createStaticKey(@NonNull StaticKeys config) {
-		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
-				.append(ConfigurationConstants.VALUE, config.getValue())
-				.append(ConfigurationConstants.SITE_VALUES, config.getSiteValues());
-		mongoTemplate.getCollection(staticKeysCollectionName).insertOne(doc);
+		repository.insert(config);
 	}
 
 	@Override
 	@CacheEvict(value = "staticKeysCache", allEntries = true)
 	public void updateStaticKey(@NonNull StaticKeys config) {
-		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
-				.append(ConfigurationConstants.VALUE, config.getValue())
-				.append(ConfigurationConstants.SITE_VALUES, config.getSiteValues());
-		Document filter = new Document(ConfigurationConstants.ID,config.getKey());
-		ReplaceOptions options = new ReplaceOptions().upsert(true);
-		mongoTemplate.getCollection(staticKeysCollectionName).replaceOne(filter, doc, options);
+		repository.save(config);
 	}
 	
 	@Override

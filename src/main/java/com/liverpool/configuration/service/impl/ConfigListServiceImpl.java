@@ -13,7 +13,6 @@ import com.liverpool.configuration.beans.ConfigList;
 import com.liverpool.configuration.constants.ConfigurationConstants;
 import com.liverpool.configuration.repository.ConfigListRepository;
 import com.liverpool.configuration.service.ConfigListService;
-import com.mongodb.client.model.ReplaceOptions;
 
 import lombok.NonNull;
 
@@ -36,19 +35,13 @@ public class ConfigListServiceImpl implements ConfigListService{
 	@Override
 	@CacheEvict(value = "configListCache", allEntries = true)
 	public void createConfigList(@NonNull ConfigList config) {
-		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
-				.append(ConfigurationConstants.VALUE, config.getValue());
-		mongoTemplate.getCollection(configListCollectionName).insertOne(doc);
+		repository.insert(config);
 	}
 
 	@Override
 	@CacheEvict(value = "configListCache", allEntries = true)
 	public void updateConfigList(@NonNull ConfigList config) {
-		Document doc = new Document(ConfigurationConstants.ID,config.getKey())
-				.append(ConfigurationConstants.VALUE, config.getValue());
-		Document filter = new Document(ConfigurationConstants.ID,config.getKey());
-		ReplaceOptions options = new ReplaceOptions().upsert(true);
-		mongoTemplate.getCollection(configListCollectionName).replaceOne(filter, doc, options);
+		repository.save(config);
 	}
 
 	@Override
