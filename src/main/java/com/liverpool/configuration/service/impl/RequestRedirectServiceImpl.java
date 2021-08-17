@@ -15,39 +15,19 @@ import org.springframework.stereotype.Service;
 
 import com.liverpool.configuration.annotations.BeanConfiguration;
 import com.liverpool.configuration.annotations.DisplayProperty;
-import com.liverpool.configuration.beans.ConfigDate;
-import com.liverpool.configuration.beans.ConfigList;
-import com.liverpool.configuration.beans.ConfigMap;
-import com.liverpool.configuration.beans.Configuration;
 import com.liverpool.configuration.beans.ConfigurationTypes;
-import com.liverpool.configuration.beans.MultiValuedConfigMap;
 import com.liverpool.configuration.beans.ResponseData;
-import com.liverpool.configuration.beans.StaticKeys;
 import com.liverpool.configuration.beans.User;
 import com.liverpool.configuration.config.JwtTokenUtil;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.repository.UserRepository;
-import com.liverpool.configuration.service.ConfigDateService;
-import com.liverpool.configuration.service.ConfigListService;
-import com.liverpool.configuration.service.ConfigMapService;
-import com.liverpool.configuration.service.MultiValuedConfigMapService;
 import com.liverpool.configuration.service.RequestRedirectService;
-import com.liverpool.configuration.service.StaticKeysService;
 
 @Service
 public class RequestRedirectServiceImpl implements RequestRedirectService{
 
-	private StaticKeysService staticKeyService;
-	
-	private ConfigListService configListService;
-	
-	private ConfigMapService configMapService;
-	
-	private ConfigDateService configDateService;
 	
 	private ConfigrationsProeprties properties;
-	
-	private MultiValuedConfigMapService multiValuedConfigService;
 	
 	private JwtTokenUtil jwtUtil;
 	
@@ -55,108 +35,15 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	
 	@Autowired
 	private ApplicationContext context;
+
 	
-	public RequestRedirectServiceImpl(ConfigrationsProeprties properties, StaticKeysService staticKeyService, 
-			ConfigListService configListService,ConfigMapService configMapService, ConfigDateService configDateService, MultiValuedConfigMapService multiValuedConfigService,
-			JwtTokenUtil jwtUtil, UserRepository userRepo){
-		this.staticKeyService = staticKeyService;
-		this.configListService = configListService;
-		this.configMapService = configMapService;
-		this.configDateService = configDateService;
-		this.multiValuedConfigService = multiValuedConfigService;
+	
+	public RequestRedirectServiceImpl(ConfigrationsProeprties properties,  JwtTokenUtil jwtUtil, UserRepository userRepo){
+		
 		this.properties = properties;
 		this.jwtUtil = jwtUtil;
 		this.userRepo = userRepo;
-	}
-	
-	@Override
-	public void redirectCreateRequest(String type, Configuration config) {
-		if((properties.getStaticKeysTypeName()).equalsIgnoreCase(type)) {
-			staticKeyService.createStaticKey(config.getStaticKeys());
-		} else if ((this.properties.getConfigListTypeName()).equalsIgnoreCase(type)) {
-			configListService.createConfigList(config.getConfigList());
-		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
-			configMapService.createConfigMap(config.getConfigMap());
-		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
-			multiValuedConfigService.createMultiValuedConfigMap(config.getMultiValuedConfigMap());
-		}  else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
-			configDateService.createConfigDate(config.getConfigDate());
-		}
-	}
-
-	@Override
-	public void redirectUpdateRequest(String type, Configuration config) {
-		if((properties.getStaticKeysTypeName()).equalsIgnoreCase(type)) {
-			staticKeyService.updateStaticKey(config.getStaticKeys());
-		} else if ((this.properties.getConfigListTypeName()).equalsIgnoreCase(type)) {
-			configListService.updateConfigList(config.getConfigList());
-		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
-			configMapService.updateConfigMap(config.getConfigMap());
-		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
-			multiValuedConfigService.updateMultiValuedConfigMap(config.getMultiValuedConfigMap());
-		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
-			configDateService.updateConfigDate(config.getConfigDate());
-		}
-	}
-
-	@Override
-	public ResponseData getAllConfigurations(String type) {
-		ResponseData resp = new ResponseData();
-		if((properties.getStaticKeysTypeName()).equalsIgnoreCase(type)) {
-			List<StaticKeys> allStaticKeys = staticKeyService.getAllStaticKeys();
-			resp.setBody(allStaticKeys);
-		} else if ((this.properties.getConfigListTypeName()).equalsIgnoreCase(type)) {
-			List<ConfigList> allConfigLists = configListService.getAllConfigLists();
-			resp.setBody(allConfigLists);
-		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
-			List<ConfigMap> allConfigMaps = configMapService.getAllConfigMaps();
-			resp.setBody(allConfigMaps);
-		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
-			List<MultiValuedConfigMap> allMultiValuedConfigMaps = multiValuedConfigService.getAllMultiValuedConfigMaps();
-			resp.setBody(allMultiValuedConfigMaps);
-		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
-			List<ConfigDate> allConfigLists = configDateService.getAllConfigLists();
-			resp.setBody(allConfigLists);
-		}
-		return resp;
-	}
-
-	@Override
-	public ResponseData getConfigurationByKey(String type, String key) {
-		ResponseData resp = new ResponseData();
-		if((properties.getStaticKeysTypeName()).equalsIgnoreCase(type)) {
-			StaticKeys staticKey = staticKeyService.getStaticKeyByKey(key);
-			resp.setBody(staticKey);
-		} else if ((this.properties.getConfigListTypeName()).equalsIgnoreCase(type)) {
-			ConfigList configList = configListService.getConfigListByKey(key);
-			resp.setBody(configList);
-		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
-			ConfigMap configMap = configMapService.getConfigMapByKey(key);
-			resp.setBody(configMap);
-		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
-			MultiValuedConfigMap multiValuedConfigMap = multiValuedConfigService.getMultiValuedConfigMapByKey(key);
-			resp.setBody(multiValuedConfigMap);
-		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
-			ConfigDate configDate = configDateService.getConfigDateByKey(key);
-			resp.setBody(configDate);
-		}
-		return resp;
-	}
-
-	@Override
-	public void deleteConfiguration(String type, String key) {
 		
-		if((properties.getStaticKeysTypeName()).equalsIgnoreCase(type)) {
-			staticKeyService.deleteStaticKey(key);
-		} else if ((this.properties.getConfigListTypeName()).equalsIgnoreCase(type)) {
-			configListService.deleteConfigList(key);
-		} else if ((this.properties.getConfigMapTypeName()).equalsIgnoreCase(type)) {
-			configMapService.deleteConfigMap(key);
-		} else if ((this.properties.getMultiValuedConfigMapTypeName()).equalsIgnoreCase(type)) {
-			multiValuedConfigService.deleteMultiValuedConfigMap(key);
-		} else if ((this.properties.getConfigDateTypeName()).equalsIgnoreCase(type)) {
-			configDateService.deleteConfigDate(key);
-		}
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.liverpool.configuration.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.liverpool.configuration.beans.Configuration;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.service.RequestRedirectService;
+import com.liverpool.configuration.service.impl.GenericRepositoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,8 +32,11 @@ public class ConfigurationController extends BaseController {
 
 	private RequestRedirectService redirectService;
 
-	public ConfigurationController(RequestRedirectService redirectService) {
+	private GenericRepositoryService genericService;
+	
+	public ConfigurationController(RequestRedirectService redirectService, GenericRepositoryService genericService) {
 		this.redirectService = redirectService;
+		this.genericService = genericService;
 	}
 
 	@Operation(summary = "This service used to create configuration")
@@ -39,9 +44,8 @@ public class ConfigurationController extends BaseController {
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@PostMapping("/config/{type}")
 	public ResponseEntity<ResponseData> createConfiguration(@PathVariable String type,
-			@RequestBody Configuration config) {
-		redirectService.redirectCreateRequest(type, config);
-		return success(config, HttpStatus.OK, "Configuration created of type::::" + type);
+			@RequestBody String payload) {
+		return success(genericService.create(type, payload), HttpStatus.OK, "Created Successfully for::::" + type);
 	}
 
 	@Operation(summary = "This service used to update configuration")
@@ -49,9 +53,8 @@ public class ConfigurationController extends BaseController {
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@PutMapping("/config/{type}")
 	public ResponseEntity<ResponseData> updateConfiguration(@PathVariable String type,
-			@RequestBody Configuration config) {
-		redirectService.redirectUpdateRequest(type, config);
-		return success(config, HttpStatus.OK, "Configuration updated!!");
+			@RequestBody String payload) {
+		return success(genericService.update(type, payload), HttpStatus.OK, "Updated Successfully for:::"+type);
 	}
 
 	@Operation(summary = "This service used to get all configurations")
@@ -63,8 +66,8 @@ public class ConfigurationController extends BaseController {
 	public ResponseEntity<ResponseData> getAllConfigurations(@PathVariable String type) {
 
 		log.info("retrieving configuration for " + type);
-		ResponseData resp = redirectService.getAllConfigurations(type);
-		return success(resp.getBody(), HttpStatus.OK, "Displaying all configurations of " + type);
+		List<Object> resp = genericService.findByAll(type);
+		return success(resp, HttpStatus.OK, "Displaying all configurations of " + type);
 	}
 
 	@Operation(summary = "This service used to get configuration by key")
@@ -74,8 +77,7 @@ public class ConfigurationController extends BaseController {
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@GetMapping({"/config/{type}/{key}","/getObjectBykey/{type}/{key}"})
 	public ResponseEntity<ResponseData> getConfigurationByKey(@PathVariable String type, @PathVariable String key) {
-		ResponseData resp = redirectService.getConfigurationByKey(type, key);
-		return success(resp.getBody(), HttpStatus.OK, "Displaying configuration for key " + key);
+		return success(genericService.findById(type, key), HttpStatus.OK, "Displaying configuration for key " + key);
 	}
 
 	@Operation(summary = "This service used to delete configuration")
@@ -83,7 +85,7 @@ public class ConfigurationController extends BaseController {
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@DeleteMapping("/config/{type}/{key}")
 	public ResponseEntity<ResponseData> deleteConfigurationByKey(@PathVariable String type, @PathVariable String key) {
-		redirectService.deleteConfiguration(type, key);
+		genericService.deleteById(type, key);
 		return success(key, HttpStatus.OK, "Deleted configuration for key " + key);
 	}
 
