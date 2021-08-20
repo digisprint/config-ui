@@ -1,4 +1,4 @@
-FROM tomcat:jdk8-openjdk
-ARG WAR_FILE=target/*.war
-COPY ${WAR_FILE} /usr/local/tomcat/webapps/global-config.war
-CMD ["catalina.sh","run"]
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} application.jar
+ENTRYPOINT ["java","-jar","/application.jar"]

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.liverpool.configuration.beans.LoginPayload;
@@ -20,7 +21,7 @@ import com.liverpool.configuration.beans.Users;
 import com.liverpool.configuration.service.UserService;
 
 @RestController
-@CrossOrigin(originPatterns = "localhost*")
+@RequestMapping("global-config")
 public class UserController {
 	
 	@Autowired

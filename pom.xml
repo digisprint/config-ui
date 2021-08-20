@@ -12,7 +12,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>liverpool-configuration</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>liverpool-configuration</name>
 	<description>Configuration services for Liverpool</description>
 	<properties>
