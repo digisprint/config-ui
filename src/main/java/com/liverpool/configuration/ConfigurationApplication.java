@@ -3,9 +3,6 @@ package com.liverpool.configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class ConfigurationApplication extends SpringBootServletInitializer {
@@ -14,16 +11,14 @@ public class ConfigurationApplication extends SpringBootServletInitializer {
 		SpringApplication.run(ConfigurationApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-				.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
-				//.allowedOrigins("*" )
-				.allowCredentials(true);
-			}
-		};
-	}
+	/*
+	 * @Bean public WebMvcConfigurer corsConfigurer() { return new
+	 * WebMvcConfigurer() {
+	 * 
+	 * @Override public void addCorsMappings(CorsRegistry registry) {
+	 * registry.addMapping("/**") .allowedMethods("HEAD", "GET", "PUT", "POST",
+	 * "DELETE", "PATCH")
+	 * .allowedOrigins("http://localhost:3000","http://35.224.205.52:3000")
+	 * //.allowedOrigins("*" ) .allowCredentials(true); } }; }
+	 */
 }
