@@ -63,7 +63,7 @@ public class ConfigurationController extends BaseController {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class)) }),
 			@ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
-	@GetMapping("/config/{type}")
+	@GetMapping({"/config/{type}", "/getAllConfigurations/{type}"})
 	public ResponseEntity<ResponseData> getAllConfigurations(@PathVariable String type) {
 
 		log.info("retrieving configuration for " + type);
