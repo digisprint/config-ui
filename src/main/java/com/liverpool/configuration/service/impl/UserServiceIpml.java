@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.liverpool.configuration.beans.Role;
 import com.liverpool.configuration.beans.User;
 import com.liverpool.configuration.beans.UserRequest;
-import com.liverpool.configuration.beans.UserResponse;
 import com.liverpool.configuration.beans.Users;
-import com.liverpool.configuration.config.JwtTokenUtil;
-import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.repository.RoleRepository;
 import com.liverpool.configuration.repository.UserRepository;
 import com.liverpool.configuration.service.UserService;
@@ -33,17 +28,11 @@ public class UserServiceIpml implements UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
-
-	@Autowired
-	private ConfigrationsProeprties properties;
 	
-	@Autowired
-	private JwtTokenUtil jwtUtils;
-
-	public UserServiceIpml(UserRepository userRepo, ConfigrationsProeprties properties,
+	
+	public UserServiceIpml(UserRepository userRepo,
 			RoleRepository roleRepository) {
 		this.userRepo = userRepo;
-		this.properties = properties;
 		this.roleRepository = roleRepository;
 	}
 
@@ -90,32 +79,6 @@ public class UserServiceIpml implements UserService {
 		return "Successfully deleted " +userId;
 	}
 	
-	@Override
-	public UserResponse login(String userName, String password) {
-
-		User user = userRepo.findById(userName).orElseThrow(RuntimeException::new);
-		if (user == null) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name oes not exist");
-		}
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		boolean isPasswordMatch = passwordEncoder.matches(password, user.getPassword());
-		if (isPasswordMatch) {
-			UserResponse userresponse = new UserResponse();
-			userresponse.setStatus(Boolean.TRUE);
-			userresponse.setToken(jwtUtils.generateToken(user));
-			return userresponse;
-		} else {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User name or password is wrong");
-		}
-	}
-
-	private boolean isValidPassword(String password) {
-		String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])";// + "(?=.*[@#$%^&+=])" + "(?=\\S+$).{8,20}$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(password);
-		return matcher.matches();
-	}
-
 	private String encryptPassword(String password) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode(password);

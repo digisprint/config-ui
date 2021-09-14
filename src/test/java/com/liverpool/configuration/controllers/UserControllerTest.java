@@ -62,13 +62,4 @@ public class UserControllerTest {
 				   .contentType(MediaType.APPLICATION_JSON)
 				   ).andExpect(status().isOk());	
 	}
-	
-	public void login() throws Exception {
-		 when(userController.login(any(LoginPayload.class))).thenReturn(new UserResponse());
-		   mockMvc.perform(
-				   post("/login")
-				   .content("{\"userName\":\"raki\",\"password\":\"raki123\"}")
-				   .contentType(MediaType.APPLICATION_JSON)
-				   ).andExpect(status().isOk());	
-	}
 }

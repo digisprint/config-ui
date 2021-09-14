@@ -47,7 +47,7 @@ public class UserServiceImplTest {
 	
 	@BeforeEach
 	 public void setUp() {
-		userService = new UserServiceIpml(userRepo, properties, roleRepository);
+		userService = new UserServiceIpml(userRepo,roleRepository);
 	 }
 	
 	public void getUser() {
@@ -86,24 +86,4 @@ public class UserServiceImplTest {
        });
     }
     
-    public void login() {
-		when(userRepo.findByUserName(anyString())).thenReturn(user);
-		when(user.getPassword()).thenReturn("$2a$10$C9C892lQUx2R7xJMzsUrDeJtvJ6ju20bZ4.LmyAIhhCXYdxWIVACG");
-		when(properties.getSecretKey()).thenReturn("Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=");
-		assertThat(userService.login("test","admin")).isNotNull();
-    }
-    
-    public void loginWithNoPasswordMathch() {
-    	when(userRepo.findByUserName(anyString())).thenReturn(user);
-    	assertThrows(ResponseStatusException.class, ()->{
-    		userService.login("test","admin");
-    	});
-    }
-    
-    public void loginWithNoUser() {
-    	when(userRepo.findByUserName(anyString())).thenReturn(null);
-    	assertThrows(ResponseStatusException.class, ()->{
-    		userService.login("test","admin");
-    	});
-    }
 }

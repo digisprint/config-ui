@@ -15,8 +15,6 @@ public interface UserService {
 	
 	String deleteUser(String userId);
 
-	UserResponse login(String userName, String password);
-
 	void insertInitialData();
 	
 }

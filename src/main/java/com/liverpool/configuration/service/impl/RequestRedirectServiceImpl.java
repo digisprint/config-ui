@@ -13,15 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.liverpool.configuration.annotations.BeanConfiguration;
 import com.liverpool.configuration.annotations.DisplayProperty;
 import com.liverpool.configuration.beans.ConfigurationTypes;
 import com.liverpool.configuration.beans.ResponseData;
 import com.liverpool.configuration.beans.User;
-import com.liverpool.configuration.config.JwtTokenUtil;
 import com.liverpool.configuration.properties.ConfigrationsProeprties;
 import com.liverpool.configuration.repository.UserRepository;
 import com.liverpool.configuration.service.RequestRedirectService;
+
+
 
 @Service
 public class RequestRedirectServiceImpl implements RequestRedirectService{
@@ -29,19 +32,18 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 	
 	private ConfigrationsProeprties properties;
 	
-	private JwtTokenUtil jwtUtil;
-	
 	private UserRepository userRepo;
 	
 	@Autowired
 	private ApplicationContext context;
+	
+	public static final String TOKEN_PREFIX = "Bearer ";
 
 	
 	
-	public RequestRedirectServiceImpl(ConfigrationsProeprties properties,  JwtTokenUtil jwtUtil, UserRepository userRepo){
+	public RequestRedirectServiceImpl(ConfigrationsProeprties properties,UserRepository userRepo){
 		
 		this.properties = properties;
-		this.jwtUtil = jwtUtil;
 		this.userRepo = userRepo;
 		
 	}
@@ -52,7 +54,7 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		List<ConfigurationTypes> configTypes = new ArrayList<ConfigurationTypes>();
 		ResponseData resp = new ResponseData();
 		Map<String, Object> beans = context.getBeansWithAnnotation(BeanConfiguration.class);
-		String usernameFromToken = jwtUtil.getUsernameFromToken(token);
+		String usernameFromToken = getUsernameFromToken(token);
 		User user = userRepo.findByUserName(usernameFromToken);
 		Map<String, String> accessPrivileges = user.getAccessPrivileges();
 		beans.forEach((key, value) -> {
@@ -111,5 +113,12 @@ public class RequestRedirectServiceImpl implements RequestRedirectService{
 		
 		resp.setBody(configTypes);
 		return resp;
+	}
+	
+	public String getUsernameFromToken(String token) {
+		return JWT.require(Algorithm.HMAC512(properties.getSecretKey().getBytes()))
+                .build()
+                .verify(token.replace(TOKEN_PREFIX, ""))
+                .getSubject();
 	}
 }
