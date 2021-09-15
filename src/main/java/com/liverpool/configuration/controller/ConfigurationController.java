@@ -94,7 +94,7 @@ public class ConfigurationController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "400", description = "Invalid data", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Data not found", content = @Content) })
 	@GetMapping("/config")
-	public ResponseEntity<ResponseData> getConfigurationTypes(@RequestHeader("token") String token) {
+	public ResponseEntity<ResponseData> getConfigurationTypes(@RequestHeader("Authorization") String token) {
 		ResponseData resp = redirectService.getConfigurationTypes(token);
 		return success(resp.getBody(), HttpStatus.OK, "Getting the available configuration types");
 	}

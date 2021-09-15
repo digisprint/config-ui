@@ -36,11 +36,6 @@ public class UserController {
 	public String register(@RequestBody @Valid User user) {
 		return userService.addUser(user);
 	}
-
-	@PostMapping(value = "/login")
-	public UserResponse login(@RequestBody @Valid LoginPayload loginPayload) {
-		return userService.login(loginPayload.getUserName(), loginPayload.getPassword());
-	}
 	
 	@PutMapping("/user")
 	public String updateUser(@RequestBody UserRequest userReq) {
