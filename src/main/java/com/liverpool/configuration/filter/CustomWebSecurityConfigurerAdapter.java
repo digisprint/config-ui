@@ -56,6 +56,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/global-config/login");
         web.ignoring().antMatchers("/swagger-ui/**");
+        web.ignoring().antMatchers("/v3/api-docs/");
     }
 
     @Override
